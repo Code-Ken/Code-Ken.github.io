@@ -1,0 +1,1018 @@
+<!doctype html>
+<html class="theme-next   use-motion ">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=0.4.5.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="PHPUnit," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.2" />
+
+
+
+
+
+
+<meta name="description" content="PHPUnit教程第三章，phpunit断言介绍">
+<meta name="keywords" content="PHPUnit">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PHPUnit第三章——Assertion断言">
+<meta property="og:url" content="http://yoursite.com/2016/02/24/phpunit-tutorial-2/index.html">
+<meta property="og:site_name" content="该死的Hero">
+<meta property="og:description" content="PHPUnit教程第三章，phpunit断言介绍">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-11-14T13:22:58.818Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="PHPUnit第三章——Assertion断言">
+<meta name="twitter:description" content="PHPUnit教程第三章，phpunit断言介绍">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: '',
+    sidebar: 'post',
+    motion: true
+  };
+</script>
+
+  <title> PHPUnit第三章——Assertion断言 | 该死的Hero </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?e705d876ea2b68e5312b4706ccb36b86";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">该死的Hero</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">ACE</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-th fa-fw"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                PHPUnit第三章——Assertion断言
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2016-02-24T17:00:57+08:00" content="2016-02-24">
+              2016-02-24
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/PHPUnit/" itemprop="url" rel="index">
+                    <span itemprop="name">PHPUnit</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/02/24/phpunit-tutorial-2/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/02/24/phpunit-tutorial-2/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p><center>PHPUnit教程第三章，phpunit断言介绍</center><br><a id="more"></a></p>
+<blockquote>
+<p>断言(Assertions)是PHPUnit提供的一系列对程序执行结果测试的方法。通俗的讲，就是断言执行程序结果为我们期待的值，如果不是则测试失败</p>
+</blockquote>
+<h2 id="布尔类型"><a href="#布尔类型" class="headerlink" title="布尔类型"></a>布尔类型</h2><table>
+<thead>
+<tr>
+<th style="text-align:center">断言</th>
+<th style="text-align:left">解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">assertTrue</td>
+<td style="text-align:left">断言为真</td>
+</tr>
+<tr>
+<td style="text-align:center">assertFalse</td>
+<td style="text-align:left">断言为假</td>
+</tr>
+</tbody>
+</table>
+<h2 id="NULL类型"><a href="#NULL类型" class="headerlink" title="NULL类型"></a>NULL类型</h2><table>
+<thead>
+<tr>
+<th style="text-align:center">断言</th>
+<th style="text-align:left">解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">assertNull</td>
+<td style="text-align:left">断言为NULL</td>
+</tr>
+<tr>
+<td style="text-align:center">assertNotNull</td>
+<td style="text-align:left">断言非NULL</td>
+</tr>
+</tbody>
+</table>
+<h2 id="数字类型"><a href="#数字类型" class="headerlink" title="数字类型"></a>数字类型</h2><table>
+<thead>
+<tr>
+<th style="text-align:center">断言</th>
+<th style="text-align:left">解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">assertEquals</td>
+<td style="text-align:left">断言等于</td>
+</tr>
+<tr>
+<td style="text-align:center">assertNotEquals</td>
+<td style="text-align:left">断言不等于</td>
+</tr>
+<tr>
+<td style="text-align:center">assertGreaterThan</td>
+<td style="text-align:left">断言大于</td>
+</tr>
+<tr>
+<td style="text-align:center">assertGreaterThanOrEqual</td>
+<td style="text-align:left">断言大于等于</td>
+</tr>
+<tr>
+<td style="text-align:center">assertLessThan</td>
+<td style="text-align:left">断言小于</td>
+</tr>
+<tr>
+<td style="text-align:center">assertLessThanOrEqual</td>
+<td style="text-align:left">断言小于等于</td>
+</tr>
+</tbody>
+</table>
+<h2 id="字符类型"><a href="#字符类型" class="headerlink" title="字符类型"></a>字符类型</h2><table>
+<thead>
+<tr>
+<th style="text-align:center">断言</th>
+<th style="text-align:left">解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">assertEquals</td>
+<td style="text-align:left">断言等于</td>
+</tr>
+<tr>
+<td style="text-align:center">assertNotEquals</td>
+<td style="text-align:left">断言不等于</td>
+</tr>
+<tr>
+<td style="text-align:center">assertContains</td>
+<td style="text-align:left">断言包含</td>
+</tr>
+<tr>
+<td style="text-align:center">assertNotContains</td>
+<td style="text-align:left">断言不包含</td>
+</tr>
+<tr>
+<td style="text-align:center">assertContainsOnly</td>
+<td style="text-align:left">断言只包含</td>
+</tr>
+<tr>
+<td style="text-align:center">assertNotContainsOnly</td>
+<td style="text-align:left">断言不只包含</td>
+</tr>
+</tbody>
+</table>
+<h2 id="数组类型"><a href="#数组类型" class="headerlink" title="数组类型"></a>数组类型</h2><table>
+<thead>
+<tr>
+<th style="text-align:center">断言</th>
+<th style="text-align:left">解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">assertEquals</td>
+<td style="text-align:left">断言等于</td>
+</tr>
+<tr>
+<td style="text-align:center">assertNotEquals</td>
+<td style="text-align:left">断言不等于</td>
+</tr>
+<tr>
+<td style="text-align:center">assertArrayHasKey</td>
+<td style="text-align:left">断言有键</td>
+</tr>
+<tr>
+<td style="text-align:center">assertArrayNotHasKey</td>
+<td style="text-align:left">断言没有键</td>
+</tr>
+<tr>
+<td style="text-align:center">assertContains</td>
+<td style="text-align:left">断言包含</td>
+</tr>
+<tr>
+<td style="text-align:center">assertNotContains</td>
+<td style="text-align:left">断言不包含</td>
+</tr>
+<tr>
+<td style="text-align:center">assertContainsOnly</td>
+<td style="text-align:left">断言只包含</td>
+</tr>
+<tr>
+<td style="text-align:center">assertNotContainsOnly</td>
+<td style="text-align:left">断言不只包含</td>
+</tr>
+</tbody>
+</table>
+<h2 id="对象类型"><a href="#对象类型" class="headerlink" title="对象类型"></a>对象类型</h2><table>
+<thead>
+<tr>
+<th style="text-align:center">断言</th>
+<th style="text-align:left">解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">assertAttributeContains</td>
+<td style="text-align:left">断言属性包含</td>
+</tr>
+<tr>
+<td style="text-align:center">assertAttributeContainsOnly</td>
+<td style="text-align:left">断言属性只包含</td>
+</tr>
+<tr>
+<td style="text-align:center">assertAttributeEquals</td>
+<td style="text-align:left">断言属性等于</td>
+</tr>
+<tr>
+<td style="text-align:center">assertAttributeGreaterThan</td>
+<td style="text-align:left">断言属性大于</td>
+</tr>
+<tr>
+<td style="text-align:center">assertAttributeGreaterThanOrEqual</td>
+<td style="text-align:left">断言属性大于等于</td>
+</tr>
+<tr>
+<td style="text-align:center">assertAttributeLessThan</td>
+<td style="text-align:left">断言属性小于</td>
+</tr>
+<tr>
+<td style="text-align:center">assertAttributeLessThanOrEqual</td>
+<td style="text-align:left">断言属性小于等于</td>
+</tr>
+<tr>
+<td style="text-align:center">assertAttributeNotContains</td>
+<td style="text-align:left">断言不包含</td>
+</tr>
+<tr>
+<td style="text-align:center">assertAttributeNotContainsOnly</td>
+<td style="text-align:left">断言属性不只包含</td>
+</tr>
+<tr>
+<td style="text-align:center">assertAttributeNotEquals</td>
+<td style="text-align:left">断言属性不等于</td>
+</tr>
+<tr>
+<td style="text-align:center">assertAttributeNotSame</td>
+<td style="text-align:left">断言属性不相同</td>
+</tr>
+<tr>
+<td style="text-align:center">assertAttributeSame</td>
+<td style="text-align:left">断言属性相同</td>
+</tr>
+<tr>
+<td style="text-align:center">assertSame</td>
+<td style="text-align:left">断言类型和值都相同</td>
+</tr>
+<tr>
+<td style="text-align:center">assertNotSame</td>
+<td style="text-align:left">断言类型或值不相同</td>
+</tr>
+<tr>
+<td style="text-align:center">assertObjectHasAttribute</td>
+<td style="text-align:left">断言对象有某属性</td>
+</tr>
+<tr>
+<td style="text-align:center">assertObjectNotHasAttribute</td>
+<td style="text-align:left">断言对象没有某属性</td>
+</tr>
+</tbody>
+</table>
+<h2 id="class类型"><a href="#class类型" class="headerlink" title="class类型"></a>class类型</h2><table>
+<thead>
+<tr>
+<th style="text-align:center">断言</th>
+<th style="text-align:left">解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">assertClassHasAttribute</td>
+<td style="text-align:left">断言类有某属性</td>
+</tr>
+<tr>
+<td style="text-align:center">assertClassHasStaticAttribute</td>
+<td style="text-align:left">断言类有某静态属性</td>
+</tr>
+<tr>
+<td style="text-align:center">assertClassNotHasAttribute</td>
+<td style="text-align:left">断言类没有某属性</td>
+</tr>
+<tr>
+<td style="text-align:center">assertClassNotHasStaticAttribute</td>
+<td style="text-align:left">断言类没有某静态属性</td>
+</tr>
+</tbody>
+</table>
+<h2 id="文件相关"><a href="#文件相关" class="headerlink" title="文件相关"></a>文件相关</h2><table>
+<thead>
+<tr>
+<th style="text-align:center">断言</th>
+<th style="text-align:left">解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">assertFileEquals</td>
+<td style="text-align:left">断言文件内容等于</td>
+</tr>
+<tr>
+<td style="text-align:center">assertFileExists</td>
+<td style="text-align:left">断言文件存在</td>
+</tr>
+<tr>
+<td style="text-align:center">assertFileNotEquals</td>
+<td style="text-align:left">断言文件内容不等于</td>
+</tr>
+<tr>
+<td style="text-align:center">assertFileNotExists</td>
+<td style="text-align:left">断言文件不存在</td>
+</tr>
+</tbody>
+</table>
+<h2 id="XML相关"><a href="#XML相关" class="headerlink" title="XML相关"></a>XML相关</h2><table>
+<thead>
+<tr>
+<th style="text-align:center">断言</th>
+<th style="text-align:left">解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">assertXmlFileEqualsXmlFile</td>
+<td style="text-align:left">断言XML文件内容相等</td>
+</tr>
+<tr>
+<td style="text-align:center">assertXmlFileNotEqualsXmlFile</td>
+<td style="text-align:left">断言XML文件内容不相等</td>
+</tr>
+<tr>
+<td style="text-align:center">assertXmlStringEqualsXmlFile</td>
+<td style="text-align:left">断言XML字符串等于XML文件内容</td>
+</tr>
+<tr>
+<td style="text-align:center">assertXmlStringEqualsXmlString</td>
+<td style="text-align:left">断言XML字符串相等</td>
+</tr>
+<tr>
+<td style="text-align:center">assertXmlStringNotEqualsXmlFile</td>
+<td style="text-align:left">断言XML字符串不等于XML文件内容</td>
+</tr>
+<tr>
+<td style="text-align:center">assertXmlStringNotEqualsXmlString</td>
+<td style="text-align:left">断言XML字符串不相等</td>
+</tr>
+</tbody>
+</table>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/PHPUnit/" rel="tag">#PHPUnit</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/02/20/phpunit-tutorial-1/" rel="next" title="PHPUnit第二章——第一个PHPUnit程序">
+                <i class="fa fa-chevron-left"></i> PHPUnit第二章——第一个PHPUnit程序
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/02/24/phpunit-tutorial-3/" rel="prev" title="PHPUnit第四章——编写PHPUnit测试">
+                PHPUnit第四章——编写PHPUnit测试 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+        </div>
+
+        
+
+
+        
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/02/24/phpunit-tutorial-2/"
+           data-title="PHPUnit第三章——Assertion断言" data-url="http://yoursite.com/2016/02/24/phpunit-tutorial-2/">
+      </div>
+    
+  </div>
+
+
+      </div>
+
+      
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/uploads/avatar.jpg" alt="Song Gao" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Song Gao</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">56</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">15</span>
+              <span class="site-state-item-name">分类</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">43</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Code-Ken" target="_blank">
+                  
+                    <i class="fa fa-github"></i> GitHub
+                  
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="mailto:gaosong0301@foxmail.com" target="_blank">
+                  
+                    <i class="fa fa-globe"></i> Email
+                  
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://7xnp4f.com1.z0.glb.clouddn.com/weixin.jpg" target="_blank">
+                  
+                    <i class="fa fa-weixin"></i> Weixin
+                  
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator">
+            <i class="fa fa-angle-double-up"></i>
+          </div>
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#布尔类型"><span class="nav-number">1.</span> <span class="nav-text">布尔类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NULL类型"><span class="nav-number">2.</span> <span class="nav-text">NULL类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数字类型"><span class="nav-number">3.</span> <span class="nav-text">数字类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字符类型"><span class="nav-number">4.</span> <span class="nav-text">字符类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数组类型"><span class="nav-number">5.</span> <span class="nav-text">数组类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对象类型"><span class="nav-number">6.</span> <span class="nav-text">对象类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#class类型"><span class="nav-number">7.</span> <span class="nav-text">class类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文件相关"><span class="nav-number">8.</span> <span class="nav-text">文件相关</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#XML相关"><span class="nav-number">9.</span> <span class="nav-text">XML相关</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator">
+            <i class="fa fa-angle-double-down"></i>
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+      
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="icon-next-heart fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Song Gao</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT
+  </a>
+</div>
+
+
+
+      </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+    
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"gaosong"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+    
+     
+
+
+    
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.2"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.2"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+<script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+<script type="text/javascript" src="/js/motion.js?v=0.4.5.2" id="motion.global"></script>
+
+
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.2" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 1 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    motionMiddleWares.sidebar = function () {
+      var $tocContent = $('.post-toc-content');
+      if (CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    };
+  });
+</script>
+
+
+
+  <script type="text/javascript" src="/js/bootstrap.js"></script>
+
+  
+  
+
+  
+  
+
+</body>
+</html>

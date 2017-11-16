@@ -1,0 +1,821 @@
+<!doctype html>
+<html class="theme-next   use-motion ">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=0.4.5.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Linux," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.2" />
+
+
+
+
+
+
+<meta name="description" content="本文主要介绍linux下关于文件管理的一些操作">
+<meta name="keywords" content="Linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux文件管理">
+<meta property="og:url" content="http://yoursite.com/2016/01/23/Linux-file-manage/index.html">
+<meta property="og:site_name" content="该死的Hero">
+<meta property="og:description" content="本文主要介绍linux下关于文件管理的一些操作">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://man.linuxde.net/wp-content/uploads/2013/11/chmod.gif">
+<meta property="og:updated_time" content="2017-11-14T13:22:58.738Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Linux文件管理">
+<meta name="twitter:description" content="本文主要介绍linux下关于文件管理的一些操作">
+<meta name="twitter:image" content="http://man.linuxde.net/wp-content/uploads/2013/11/chmod.gif">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: '',
+    sidebar: 'post',
+    motion: true
+  };
+</script>
+
+  <title> Linux文件管理 | 该死的Hero </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?e705d876ea2b68e5312b4706ccb36b86";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">该死的Hero</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">ACE</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-th fa-fw"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Linux文件管理
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2016-01-23T12:17:13+08:00" content="2016-01-23">
+              2016-01-23
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/01/23/Linux-file-manage/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/01/23/Linux-file-manage/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p><center>本文主要介绍linux下关于文件管理的一些操作</center><br><a id="more"></a></p>
+<h2 id="目录基本操作"><a href="#目录基本操作" class="headerlink" title="目录基本操作"></a>目录基本操作</h2><h3 id="ls命令"><a href="#ls命令" class="headerlink" title="ls命令"></a>ls命令</h3><p>显示目标列表</p>
+<h4 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h4><figure class="highlight erlang"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">ls</span>     <span class="params">(选项)</span>    <span class="params">(参数)</span></span></span><br></pre></td></tr></table></figure>
+<h4 id="选项"><a href="#选项" class="headerlink" title="选项"></a>选项</h4><p>常用选项</p>
+<figure class="highlight haml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">-<span class="ruby">a：显示所有档案及目录（ls内定将档案名或目录名称为“.”的视为隐藏，不会列出）； </span></span><br><span class="line"><span class="ruby">-A：显示除影藏文件“.”和“..”以外的所有文件列表；</span></span><br><span class="line"><span class="ruby">-l：所有输出信息用单列格式输出，不输出为多列；</span></span><br><span class="line"><span class="ruby">-i：显示文件索引节点号（inode）。一个索引节点代表一个文件；</span></span><br><span class="line"><span class="ruby">-s：显示文件和目录的大小，以区块为单位；</span></span><br></pre></td></tr></table></figure>
+<h4 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h4><p>目录：指定要显示列表的目录，也可以是具体的文件</p>
+<h4 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h4><figure class="highlight tap"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">[root@AY130520180402842260Z home]<span class="comment"># ls</span></span><br><span class="line">2.php  a    Auth.class.php  cmd.php     empty.php     global.php  logs     pheanstalk  pids     s_w.php         utils.php    worker.php</span><br><span class="line">3.php  api  b.sh            config.php  gen_addr.php  inc         modules  php.txt     s_c.php  task_state.php  watcher.php</span><br><span class="line"></span><br><span class="line">[root@AY130520180402842260Z home]<span class="comment"># ls -sail</span></span><br><span class="line">total 144</span><br><span class="line">2614648 <span class="number"> 4 </span>drwxr-xr-x <span class="number"> 9 </span>root root <span class="number"> 4096 </span>Jan<span class="number"> 13 </span>16:58 .</span><br><span class="line">2614647 <span class="number"> 4 </span>drwxr-xr-x <span class="number"> 3 </span>root root <span class="number"> 4096 </span>Oct<span class="number"> 21 </span>10:23 ..</span><br><span class="line">2615501 <span class="number"> 4 </span>-rw-r--r-- <span class="number"> 1 </span>root root  <span class="number"> 500 </span>Jan<span class="number"> 13 </span>16:58 2.php</span><br><span class="line">2615486 <span class="number"> 4 </span>-rw-r--r-- <span class="number"> 1 </span>root root  <span class="number"> 555 </span>Sep <span class="number"> 2 </span>17:09 3.php</span><br><span class="line">2630038 <span class="number"> 4 </span>drwxr-xr-x <span class="number"> 2 </span>root root <span class="number"> 4096 </span>Nov<span class="number"> 20 </span>14:34 a</span><br><span class="line">2614771 <span class="number"> 4 </span>drwxr-xr-x<span class="number"> 21 </span>root root <span class="number"> 4096 </span>Aug<span class="number"> 21 </span>15:54 api</span><br><span class="line">2615484 <span class="number"> 4 </span>-rw-r--r-- <span class="number"> 1 </span>root root <span class="number"> 3719 </span>Sep <span class="number"> 2 </span>17:01 Auth.class.php</span><br><span class="line">2615485 <span class="number"> 4 </span>-rw-r--r-- <span class="number"> 1 </span>root root   <span class="number"> 59 </span>Sep <span class="number"> 2 </span>14:40 b.sh</span><br><span class="line">2615405 <span class="number"> 4 </span>-rw-r--r-- <span class="number"> 1 </span>root root <span class="number"> 2717 </span>Apr<span class="number"> 22 </span><span class="number"> 2015 </span>cmd.php</span><br><span class="line">2615594 <span class="number"> 4 </span>-rw-r--r-- <span class="number"> 1 </span>root root  <span class="number"> 887 </span>Aug <span class="number"> 4 </span>10:46 config.php</span><br><span class="line">2615408 <span class="number"> 4 </span>-rw-r--r-- <span class="number"> 1 </span>root root  <span class="number"> 616 </span>May <span class="number"> 5 </span><span class="number"> 2015 </span>empty.php</span><br><span class="line">2615412 <span class="number"> 4 </span>-rw-r--r-- <span class="number"> 1 </span>root root <span class="number"> 2012 </span>Apr<span class="number"> 22 </span><span class="number"> 2015 </span>gen_addr.php</span><br><span class="line">2615410 <span class="number"> 4 </span>-rw-r--r-- <span class="number"> 1 </span>root root <span class="number"> 2208 </span>Apr<span class="number"> 22 </span><span class="number"> 2015 </span>global.php</span><br><span class="line">2621841 <span class="number"> 4 </span>drwxr-xr-x <span class="number"> 2 </span>root root <span class="number"> 4096 </span>Apr<span class="number"> 22 </span><span class="number"> 2015 </span>inc</span><br><span class="line">2621544 <span class="number"> 4 </span>drwxr-xr-x<span class="number"> 24 </span>root root <span class="number"> 4096 </span>Jan<span class="number"> 15 </span>11:21 logs</span><br><span class="line">2614653 <span class="number"> 4 </span>drwxr-xr-x<span class="number"> 10 </span>root root <span class="number"> 4096 </span>Aug <span class="number"> 4 </span>13:48 modules</span><br><span class="line">2621791 <span class="number"> 4 </span>drwxr-xr-x <span class="number"> 3 </span>root root <span class="number"> 4096 </span>Apr<span class="number"> 22 </span><span class="number"> 2015 </span>pheanstalk</span><br><span class="line">2615479<span class="number"> 32 </span>-rw-r--r-- <span class="number"> 1 </span>root root<span class="number"> 31305 </span>Sep <span class="number"> 2 </span>10:21 php.txt</span><br><span class="line">2621789 <span class="number"> 4 </span>drwxr-xr-x <span class="number"> 2 </span>root root <span class="number"> 4096 </span>Apr<span class="number"> 22 </span><span class="number"> 2015 </span>pids</span><br><span class="line">2615500 <span class="number"> 4 </span>-rw-r--r-- <span class="number"> 1 </span>root root  <span class="number"> 365 </span>Jan<span class="number"> 11 </span>18:01 s_c.php</span><br><span class="line">2615499 <span class="number"> 4 </span>-rw-r--r-- <span class="number"> 1 </span>root root  <span class="number"> 539 </span>Jan<span class="number"> 11 </span>18:01 s_w.php</span><br><span class="line">2615407 <span class="number"> 4 </span>-rw-r--r-- <span class="number"> 1 </span>root root  <span class="number"> 484 </span>Apr<span class="number"> 22 </span><span class="number"> 2015 </span>task_state.php</span><br><span class="line">2615487<span class="number"> 12 </span>-rw-r--r-- <span class="number"> 1 </span>root root <span class="number"> 9805 </span>Sep <span class="number"> 2 </span>15:47 utils.php</span><br><span class="line">2614651 <span class="number"> 4 </span>-rw-r--r-- <span class="number"> 1 </span>root root <span class="number"> 3734 </span>Apr<span class="number"> 22 </span><span class="number"> 2015 </span>watcher.php</span><br><span class="line">2615404<span class="number"> 12 </span>-rw-r--r-- <span class="number"> 1 </span>root root <span class="number"> 9855 </span>Apr<span class="number"> 22 </span><span class="number"> 2015 </span>worker.php</span><br><span class="line"></span><br><span class="line">[root@AY130520180402842260Z home]<span class="comment">#</span></span><br></pre></td></tr></table></figure>
+<h3 id="pwd命令"><a href="#pwd命令" class="headerlink" title="pwd命令"></a>pwd命令</h3><p>pwd命令以绝对路径的方式显示用户当前工作目录</p>
+<h4 id="语法-1"><a href="#语法-1" class="headerlink" title="语法"></a>语法</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">pwd</span></span><br></pre></td></tr></table></figure>
+<h4 id="实例-1"><a href="#实例-1" class="headerlink" title="实例"></a>实例</h4><figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@AY130520180402842260Z <span class="built_in">home</span>]<span class="meta"># pwd</span></span><br><span class="line">/root/<span class="built_in">home</span></span><br></pre></td></tr></table></figure>
+<h3 id="cd命令"><a href="#cd命令" class="headerlink" title="cd命令"></a>cd命令</h3><p>cd命令用来切换工作目录至dirname。</p>
+<h4 id="语法-2"><a href="#语法-2" class="headerlink" title="语法"></a>语法</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> dirname</span><br></pre></td></tr></table></figure>
+<h4 id="实例-2"><a href="#实例-2" class="headerlink" title="实例"></a>实例</h4><figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">cd</span> 进入用户主目录； </span><br><span class="line"><span class="keyword">cd</span> ~ 进入用户主目录； </span><br><span class="line"><span class="keyword">cd</span> - 返回进入此目录之前所在的目录； </span><br><span class="line"><span class="keyword">cd</span> <span class="string">..</span> 返回上级目录</span><br><span class="line"><span class="keyword">cd</span> <span class="string">../..</span> 返回上两级目录； </span><br><span class="line"><span class="keyword">cd</span> !$ 把上个命令的参数作为<span class="keyword">cd</span>参数使用</span><br></pre></td></tr></table></figure>
+<h3 id="mv命令"><a href="#mv命令" class="headerlink" title="mv命令"></a>mv命令</h3><p>mv命令用来对文件或目录重新命名，或者将文件从一个目录移到另一个目录中<br><code>注意事项</code>：mv与cp的结果不同，mv好像文件“搬家”，文件个数并未增加。而cp对文件进行复制，文件个数增加了。</p>
+<h4 id="语法-3"><a href="#语法-3" class="headerlink" title="语法"></a>语法</h4><figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mv source <span class="keyword">target</span></span><br></pre></td></tr></table></figure>
+<h4 id="实例-3"><a href="#实例-3" class="headerlink" title="实例"></a>实例</h4><figure class="highlight haxe"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#将文件ex3改名为new1 </span></span><br><span class="line">mv ex3 <span class="keyword">new</span><span class="type">1</span> </span><br><span class="line"><span class="meta">#将目录/usr/men中的所有文件移到当前目录（用.表示）中： </span></span><br><span class="line">mv /usr/men<span class="comment">/* .</span></span><br></pre></td></tr></table></figure>
+<h3 id="cp命令"><a href="#cp命令" class="headerlink" title="cp命令"></a>cp命令</h3><p>cp命令用来将一个或多个源文件或者目录复制到指定的目的文件或目录。</p>
+<h4 id="语法-4"><a href="#语法-4" class="headerlink" title="语法"></a>语法</h4><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">cp</span> <span class="keyword">source</span> target</span><br></pre></td></tr></table></figure>
+<h4 id="实例-4"><a href="#实例-4" class="headerlink" title="实例"></a>实例</h4><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#将文件<span class="keyword">file</span>复制到目录<span class="regexp">/usr/</span>下，并改名为file1 </span><br><span class="line">cp <span class="keyword">file</span> <span class="regexp">/usr/</span>file1</span><br></pre></td></tr></table></figure>
+<h3 id="rm命令"><a href="#rm命令" class="headerlink" title="rm命令"></a>rm命令</h3><p>rm命令可以删除一个目录中的一个或多个文件或目录，也可以将某个目录及其下属的所有文件及其子目录均删除掉。对于链接文件，只是删除整个链接文件，而原有文件保持不变。</p>
+<h4 id="语法-5"><a href="#语法-5" class="headerlink" title="语法"></a>语法</h4><figure class="highlight erlang"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">rm</span>     <span class="params">(选项)</span>    <span class="params">(参数)</span></span></span><br></pre></td></tr></table></figure>
+<h4 id="选项-1"><a href="#选项-1" class="headerlink" title="选项"></a>选项</h4><figure class="highlight haml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">-<span class="ruby">d：直接把欲删除的目录的硬连接数据删除成<span class="number">0</span>，删除该目录； </span></span><br><span class="line"><span class="ruby">-f：强制删除文件或目录； </span></span><br><span class="line"><span class="ruby">-i：删除已有文件或目录之前先询问用户； </span></span><br><span class="line"><span class="ruby">-r或-R：递归处理，将指定目录下的所有文件与子目录一并处理；</span></span><br></pre></td></tr></table></figure>
+<h4 id="参数-1"><a href="#参数-1" class="headerlink" title="参数"></a>参数</h4><p>文件：指定被删除的文件列表，如果参数中含有目录，则必须加上-r或者-R选项。</p>
+<h4 id="实例-5"><a href="#实例-5" class="headerlink" title="实例"></a>实例</h4><figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="symbol">@AY130520180402842260Z</span> ~]<span class="meta"># rm hello.php</span></span><br></pre></td></tr></table></figure>
+<h3 id="mkdir命令"><a href="#mkdir命令" class="headerlink" title="mkdir命令"></a>mkdir命令</h3><p>mkdir命令用来创建目录</p>
+<h4 id="语法-6"><a href="#语法-6" class="headerlink" title="语法"></a>语法</h4><figure class="highlight erlang"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">mkdir</span> 	<span class="params">(选项)</span>	<span class="params">(参数)</span></span></span><br></pre></td></tr></table></figure>
+<h4 id="选项-2"><a href="#选项-2" class="headerlink" title="选项"></a>选项</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-m<span class="tag">&lt;<span class="name">目标属性</span>&gt;</span>或--mode<span class="tag">&lt;<span class="name">目标属性</span>&gt;</span>建立目录的同时设置目录的权限；</span><br></pre></td></tr></table></figure>
+<h4 id="参数-2"><a href="#参数-2" class="headerlink" title="参数"></a>参数</h4><p>目录：指定要创建的目录列表，多个目录之间用空格隔开。</p>
+<h4 id="实例-6"><a href="#实例-6" class="headerlink" title="实例"></a>实例</h4><figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> -m <span class="number">700</span> dirname</span><br></pre></td></tr></table></figure>
+<h3 id="rmdir命令"><a href="#rmdir命令" class="headerlink" title="rmdir命令"></a>rmdir命令</h3><p>用来删除<code>空目录</code>。</p>
+<h4 id="语法-7"><a href="#语法-7" class="headerlink" title="语法"></a>语法</h4><figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">rmdir</span> dirname</span><br></pre></td></tr></table></figure>
+<h4 id="实例-7"><a href="#实例-7" class="headerlink" title="实例"></a>实例</h4><figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">rmdir</span> emptyfile</span><br></pre></td></tr></table></figure>
+<h2 id="文件内容查看"><a href="#文件内容查看" class="headerlink" title="文件内容查看"></a>文件内容查看</h2><h3 id="tail命令"><a href="#tail命令" class="headerlink" title="tail命令"></a>tail命令</h3><p>tail命令用于输入文件中的尾部内容。tail命令默认在屏幕上显示指定文件的末尾10行。如果给定的文件不止一个，则在显示的每个文件前面加一个文件名标题。如果没有指定文件或者文件名为“-”，则读取标准输入。</p>
+<h4 id="语法-8"><a href="#语法-8" class="headerlink" title="语法"></a>语法</h4><figure class="highlight erlang"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">tail</span>	<span class="params">(选项)</span>	<span class="params">(参数)</span></span></span><br></pre></td></tr></table></figure>
+<h4 id="选项-3"><a href="#选项-3" class="headerlink" title="选项"></a>选项</h4><figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">-<span class="built_in">n</span>或——line=：输出文件的尾部<span class="built_in">N</span>（<span class="built_in">N</span>位数字）行内容</span><br><span class="line">+&lt;<span class="built_in">N</span>&gt;<span class="symbol">:</span>输出文件从第<span class="built_in">N</span>行开始到文件尾部的内容</span><br><span class="line">-c或——bytes=：输出文件尾部的<span class="built_in">N</span>（<span class="built_in">N</span>为整数）个字节内容；</span><br></pre></td></tr></table></figure>
+<h4 id="参数-3"><a href="#参数-3" class="headerlink" title="参数"></a>参数</h4><p>文件名称列表</p>
+<h4 id="实例-8"><a href="#实例-8" class="headerlink" title="实例"></a>实例</h4><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">tail <span class="built_in">file</span> （显示文件<span class="built_in">file</span>的最后<span class="number">10</span>行） </span><br><span class="line">tail +<span class="number">20</span> <span class="built_in">file</span> （显示文件<span class="built_in">file</span>的内容，从第<span class="number">20</span>行至文件末尾） </span><br><span class="line">tail -n <span class="number">20</span> <span class="built_in">file</span> （显示文件<span class="built_in">file</span>的最后<span class="number">20</span>行）</span><br><span class="line">tail -c <span class="number">10</span> <span class="built_in">file</span> （显示文件<span class="built_in">file</span>的最后<span class="number">10</span>个字符)</span><br></pre></td></tr></table></figure>
+<h3 id="head命令"><a href="#head命令" class="headerlink" title="head命令"></a>head命令</h3><p>head命令用于显示文件的开头的内容。在默认情况下，head命令显示文件的头10行内容。</p>
+<h4 id="语法-9"><a href="#语法-9" class="headerlink" title="语法"></a>语法</h4><figure class="highlight erlang"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">head</span>  <span class="params">(选项)</span>  <span class="params">(参数)</span></span></span><br></pre></td></tr></table></figure>
+<h4 id="选项-4"><a href="#选项-4" class="headerlink" title="选项"></a>选项</h4><figure class="highlight haml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-<span class="ruby">n&lt;数字&gt;：指定显示头部内容的行数； </span></span><br><span class="line"><span class="ruby">-c&lt;字符数&gt;：指定显示头部内容的字符数;</span></span><br></pre></td></tr></table></figure>
+<h4 id="参数-4"><a href="#参数-4" class="headerlink" title="参数"></a>参数</h4><p>文件列表：指定显示头部内容的文件列表。</p>
+<h3 id="more命令"><a href="#more命令" class="headerlink" title="more命令"></a>more命令</h3><p>more命令是一个基于vi编辑器文本过滤器，它以全屏幕的方式按页显示文本文件的内容，<br>支持vi中的关键字定位操作。<br>more名单中内置了若干快捷键，常用的有</p>
+<ul>
+<li>H（获得帮助信息）</li>
+<li>Enter（向下翻滚一行）</li>
+<li>空格（向下滚动一屏）</li>
+<li>B(向前滚动一屏)</li>
+<li>Q（退出命令）</li>
+</ul>
+<h4 id="语法-10"><a href="#语法-10" class="headerlink" title="语法"></a>语法</h4><figure class="highlight erlang"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">more</span>     <span class="params">(选项)</span>    <span class="params">(参数)</span></span></span><br></pre></td></tr></table></figure>
+<h4 id="选项-5"><a href="#选项-5" class="headerlink" title="选项"></a>选项</h4><figure class="highlight haml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">-<span class="ruby">&lt;数字&gt;：指定每屏显示的行数； </span></span><br><span class="line"><span class="ruby">-d：显示“[press space to continue,<span class="string">'q'</span> to quit.]”和“[Press <span class="string">'h'</span> <span class="keyword">for</span> instructions]”； </span></span><br><span class="line"><span class="ruby">-c：不进行滚屏操作。每次刷新这个屏幕； </span></span><br><span class="line"><span class="ruby">-s：将多个空行压缩成一行显示； </span></span><br><span class="line"><span class="ruby">-u：禁止下划线； </span></span><br><span class="line"><span class="ruby">+&lt;数字&gt;：从指定数字的行开始显示。</span></span><br></pre></td></tr></table></figure>
+<h4 id="参数-5"><a href="#参数-5" class="headerlink" title="参数"></a>参数</h4><p>文件：指定分页显示内容的文件。</p>
+<h3 id="less命令"><a href="#less命令" class="headerlink" title="less命令"></a>less命令</h3><p> less命令的作用与more十分相似，都可以用来浏览文字档案的内容，不同的是less命令允许用户向前或向后浏览文件，而more命令只能向前浏览。用less命令显示文件时，用PageUp键向上翻页，用PageDown键向下翻页。要退出less程序，应按Q键。</p>
+<h2 id="文件查找和比较"><a href="#文件查找和比较" class="headerlink" title="文件查找和比较"></a>文件查找和比较</h2><h3 id="which命令"><a href="#which命令" class="headerlink" title="which命令"></a>which命令</h3><p>which命令用于查找并显示给定命令的绝对路径，环境变量PATH中保存了查找命令时需要遍历的目录。which指令会在环境变量$PATH设置的目录里查找符合条件的文件。也就是说，使用which命令，就可以看到某个系统命令是否存在，以及执行的到底是哪一个位置的命令。</p>
+<h4 id="实例-9"><a href="#实例-9" class="headerlink" title="实例"></a>实例</h4><figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="symbol">@AY130520180402842260Z</span> home]<span class="meta"># which php</span></span><br><span class="line">/usr/<span class="keyword">local</span>/bin/php</span><br></pre></td></tr></table></figure>
+<h3 id="whereis命令"><a href="#whereis命令" class="headerlink" title="whereis命令"></a>whereis命令</h3><p>which只能查找二进制程序<br>whereis命令用来定位指令的二进制程序、源代码文件和man手册页等相关文件的路径。 </p>
+<p>whereis命令只能用于程序名的搜索，而且只搜索二进制文件（参数-b）、man说明文件（参数-m）和源代码文件（参数-s）。如果省略参数，则返回所有信息。 </p>
+<h3 id="find命令"><a href="#find命令" class="headerlink" title="find命令"></a>find命令</h3><h4 id="语法-11"><a href="#语法-11" class="headerlink" title="语法"></a>语法</h4><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">find</span><span class="params">(选项)</span><span class="params">(参数)</span></span></span><br></pre></td></tr></table></figure>
+<h4 id="选项-6"><a href="#选项-6" class="headerlink" title="选项"></a>选项</h4><figure class="highlight haml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">-<span class="ruby">name&lt;范本样式&gt;：指定字符串作为寻找文件或目录的范本样式；</span></span><br><span class="line"><span class="ruby">-iname&lt;范本样式&gt;：此参数的效果和指定“-name”参数类似，但忽略字符大小写的差别；</span></span><br><span class="line"><span class="ruby"></span></span><br><span class="line"><span class="ruby">-path&lt;范本样式&gt;：指定字符串作为寻找目录的范本样式；</span></span><br><span class="line"><span class="ruby">-ipath&lt;范本样式&gt;：此参数的效果和指定“-path”参数类似，但忽略字符大小写的差别； </span></span><br><span class="line"><span class="ruby"></span></span><br><span class="line"><span class="ruby">-regex&lt;范本样式&gt;：指定字符串作为寻找文件或目录的范本样式；</span></span><br><span class="line"><span class="ruby">-iregex&lt;范本样式&gt;：此参数的效果和指定“-regexe”参数类似，但忽略字符大小写的差别；</span></span><br><span class="line"><span class="ruby"></span></span><br><span class="line"><span class="ruby">-type&lt;文件类型&gt;：只寻找符合指定的文件类型的文件；</span></span><br><span class="line"><span class="ruby">	类型参数列表： f 普通文件 l 符号连接 d 目录 c 字符设备 b 块设备 s 套接字 p Fifo</span></span><br><span class="line"><span class="ruby"></span></span><br><span class="line"><span class="ruby">-maxdepth&lt;目录层级&gt;：设置最大目录层级； </span></span><br><span class="line"><span class="ruby">-mindepth&lt;目录层级&gt;：设置最小目录层级；</span></span><br><span class="line"><span class="ruby"></span></span><br><span class="line"><span class="ruby">-amin&lt;分钟&gt;：查找在指定时间曾被存取过的文件或目录，单位以分钟计算； </span></span><br><span class="line"><span class="ruby">-cmin&lt;分钟&gt;：查找在指定时间之时被更改过的文件或目录； </span></span><br><span class="line"><span class="ruby">-mmin&lt;分钟&gt;：查找在指定时间曾被更改过的文件或目录，单位以分钟计算； </span></span><br><span class="line"><span class="ruby"></span></span><br><span class="line"><span class="ruby">-atime&lt;<span class="number">24</span>小时数&gt;：查找在指定时间曾被存取过的文件或目录，单位以<span class="number">24</span>小时计算； </span></span><br><span class="line"><span class="ruby">-ctime&lt;<span class="number">24</span>小时数&gt;：查找在指定时间之时被更改的文件或目录，单位以<span class="number">24</span>小时计算；</span></span><br><span class="line"><span class="ruby">-mtime&lt;<span class="number">24</span>小时数&gt;：查找在指定时间曾被更改过的文件或目录，单位以<span class="number">24</span>小时计算；</span></span><br><span class="line"><span class="ruby"></span></span><br><span class="line"><span class="ruby">-size&lt;文件大小&gt;：查找符合指定的文件大小的文件；</span></span><br><span class="line"><span class="ruby"></span></span><br><span class="line"><span class="ruby">-delete：删除符号要求的文件</span></span><br><span class="line"><span class="ruby"></span></span><br><span class="line"><span class="ruby">-perm&lt;权限数值&gt;：查找符合指定的权限数值的文件或目录；</span></span><br><span class="line"><span class="ruby"></span></span><br><span class="line"><span class="ruby">-group&lt;群组名称&gt;：查找符合指定之群组名称的文件或目录；</span></span><br><span class="line"><span class="ruby">-nogroup：找出不属于本地主机群组识别码的文件或目录；</span></span><br><span class="line"><span class="ruby"></span></span><br><span class="line"><span class="ruby">-user&lt;拥有者名称&gt;：查找符和指定的拥有者名称的文件或目录；</span></span><br><span class="line"><span class="ruby">-nouser：找出不属于本地主机用户识别码的文件或目录；</span></span><br><span class="line"><span class="ruby"></span></span><br><span class="line"><span class="ruby">-empty  列出所有为空的文件</span></span><br></pre></td></tr></table></figure>
+<h4 id="实例-10"><a href="#实例-10" class="headerlink" title="实例"></a>实例</h4><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">#列出当前目录及子目录下所有文件和文件夹 </span></span><br><span class="line"><span class="builtin-name">find</span> .</span><br><span class="line"></span><br><span class="line"><span class="comment">#在/home目录下查找以.txt结尾的文件名</span></span><br><span class="line"><span class="builtin-name">find</span> /home -name <span class="string">"*.txt"</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#同上，但忽略大小写 </span></span><br><span class="line"><span class="builtin-name">find</span> /home -iname <span class="string">"*.txt"</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#当前目录及子目录下查找所有以.txt和.pdf结尾的文件 </span></span><br><span class="line"><span class="builtin-name">find</span> . \( -name <span class="string">"*.txt"</span> -o -name <span class="string">"*.pdf"</span> \) </span><br><span class="line"><span class="comment">#或</span></span><br><span class="line"><span class="builtin-name">find</span> . -name <span class="string">"*.txt"</span> -o -name <span class="string">"*.pdf"</span> </span><br><span class="line"></span><br><span class="line"><span class="comment">#匹配文件路径或者文件 </span></span><br><span class="line"><span class="builtin-name">find</span> /usr/ -path <span class="string">"*local*"</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#基于正则表达式匹配文件路径 </span></span><br><span class="line"><span class="builtin-name">find</span> . -regex <span class="string">".*\(\.txt\|\.pdf\)$"</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#同上，但忽略大小写 </span></span><br><span class="line"><span class="builtin-name">find</span> . -iregex <span class="string">".*\(\.txt\|\.pdf\)$"</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#找出/home下不是以.txt结尾的文件 </span></span><br><span class="line"><span class="builtin-name">find</span> /home ! -name <span class="string">"*.txt"</span> </span><br><span class="line"></span><br><span class="line"><span class="comment">#根据文件类型进行搜索 </span></span><br><span class="line"><span class="builtin-name">find</span> . -type 类型参数 </span><br><span class="line"></span><br><span class="line"><span class="comment">#基于目录深度搜索 向下最大深度限制为3 </span></span><br><span class="line"><span class="builtin-name">find</span> . -maxdepth 3 -type f </span><br><span class="line"></span><br><span class="line"><span class="comment">#搜索出深度距离当前目录至少2个子目录的所有文件 </span></span><br><span class="line"><span class="builtin-name">find</span> . -mindepth 2 -type f</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#UNIX/Linux文件系统每个文件都有三种时间戳： </span></span><br><span class="line"><span class="comment">#访问时间（-atime/天，-amin/分钟）：用户最近一次访问时间。 </span></span><br><span class="line"><span class="comment">#修改时间（-mtime/天，-mmin/分钟）：文件最后一次修改时间。 </span></span><br><span class="line"><span class="comment">#变化时间（-ctime/天，-cmin/分钟）：文件数据元（例如权限等）最后一次修改时间。</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#搜索最近七天内被访问过的所有文件 </span></span><br><span class="line"><span class="builtin-name">find</span> . -type f -atime -7 </span><br><span class="line"></span><br><span class="line"><span class="comment">#搜索恰好在七天前被访问过的所有文件 </span></span><br><span class="line"><span class="builtin-name">find</span> . -type f -atime 7 </span><br><span class="line"></span><br><span class="line"><span class="comment">#搜索超过七天内被访问过的所有文件 </span></span><br><span class="line"><span class="builtin-name">find</span> . -type f -atime +7</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#根据文件大小进行匹配 </span></span><br><span class="line"><span class="builtin-name">find</span> . -type f -size 文件大小单元 </span><br><span class="line"><span class="comment">#文件大小单元： b —— 块（512字节） c —— 字节 w —— 字（2字节） k —— 千字节 M —— 兆字节 G —— 吉字节 </span></span><br><span class="line"><span class="comment">#搜索大于10KB的文件 </span></span><br><span class="line"><span class="builtin-name">find</span> . -type f -size +10k</span><br><span class="line"></span><br><span class="line"><span class="comment">#搜索小于10KB的文件 </span></span><br><span class="line"><span class="builtin-name">find</span> . -type f -size -10k </span><br><span class="line"></span><br><span class="line"><span class="comment">#搜索等于10KB的文件 </span></span><br><span class="line"><span class="builtin-name">find</span> . -type f -size 10k</span><br><span class="line"></span><br><span class="line"><span class="comment">#删除当前目录下所有.txt文件 </span></span><br><span class="line"><span class="builtin-name">find</span> . -type f -name <span class="string">"*.txt"</span> -delete</span><br><span class="line"></span><br><span class="line"><span class="comment">#找出当前目录下权限不是644的php文件 </span></span><br><span class="line"><span class="builtin-name">find</span> . -type f -name <span class="string">"*.php"</span> ! -perm 644</span><br><span class="line"></span><br><span class="line"><span class="comment">#找出当前目录用户tom拥有的所有文件 </span></span><br><span class="line"><span class="builtin-name">find</span> . -type f -user tom </span><br><span class="line"><span class="comment">#找出当前目录用户组sunk拥有的所有文件 </span></span><br><span class="line"><span class="builtin-name">find</span> . -type f -group sunk</span><br><span class="line"></span><br><span class="line"><span class="comment">#要列出所有长度为零的文件 </span></span><br><span class="line"><span class="builtin-name">find</span> . -empty</span><br></pre></td></tr></table></figure>
+<h3 id="locate-slocate命令"><a href="#locate-slocate命令" class="headerlink" title="locate/slocate命令"></a>locate/slocate命令</h3><p>locate命令和slocate命令都用来查找文件或目录。<br>locate命令其实是find -name的另一种写法，但是要比后者快得多，原因在于它不搜索具体目录，而是搜索一个数据库/var/lib/locatedb，这个数据库中含有本地所有文件信息。Linux系统自动创建这个数据库，并且每天自动更新一次，所以使用locate命令查不到最新变动过的文件。为了避免这种情况，可以在使用locate之前，先使用<code>updatedb</code>命令，手动更新数据库。</p>
+<h4 id="实例-11"><a href="#实例-11" class="headerlink" title="实例"></a>实例</h4><figure class="highlight gauss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">搜索用户主目录下，所有以m开头的文件 </span><br><span class="line"><span class="keyword">locate</span> ~/m</span><br></pre></td></tr></table></figure>
+<h3 id="diff命令"><a href="#diff命令" class="headerlink" title="diff命令"></a>diff命令</h3><p>diff命令在最简单的情况下，比较给定的两个文件的不同。<br>diff命令是以逐行的方式，比较文本文件的异同处。<br>如果该命令指定进行目录的比较，则将会比较该目录中具有相同文件名的文件，而不会对其子目录文件进行任何比较操作。</p>
+<h4 id="实例-12"><a href="#实例-12" class="headerlink" title="实例"></a>实例</h4><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="attr">localhost:</span><span class="string">Documents</span> <span class="string">Ken$</span> <span class="string">diff</span> <span class="string">aaaaaaa</span> <span class="string">bbbbbbbb</span> </span><br><span class="line"><span class="number">1</span><span class="string">c1</span></span><br><span class="line"><span class="string">&lt;</span> <span class="string">aaaaaaa</span></span><br><span class="line"><span class="string">\</span> <span class="literal">No</span> <span class="string">newline</span> <span class="string">at</span> <span class="string">end</span> <span class="string">of</span> <span class="string">file</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="string">&gt; bbbbbbbb</span></span><br></pre></td></tr></table></figure>
+<h3 id="cmp命令"><a href="#cmp命令" class="headerlink" title="cmp命令"></a>cmp命令</h3><p>cmp命令用来比较两个文件是否有差异。当相互比较的两个文件完全一样时，则该指令不会显示任何信息。<br>若发现有差异，预设会标示出第一个不通之处的字符和列数编号</p>
+<h4 id="实例-13"><a href="#实例-13" class="headerlink" title="实例"></a>实例</h4><figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">localhost</span>:Documents Ken$ <span class="keyword">cmp </span>aaaaaaa <span class="keyword">bbbbbbbb </span></span><br><span class="line"><span class="symbol">aaaaaaa</span> <span class="keyword">bbbbbbbb </span>differ: char <span class="number">1</span>, line <span class="number">1</span></span><br></pre></td></tr></table></figure>
+<h2 id="文件处理"><a href="#文件处理" class="headerlink" title="文件处理"></a>文件处理</h2><h3 id="iconv命令"><a href="#iconv命令" class="headerlink" title="iconv命令"></a>iconv命令</h3><p>用来转换文件的编码方式，比如它可以将UTF8编码的转换成GB18030的编码</p>
+<h4 id="语法-12"><a href="#语法-12" class="headerlink" title="语法"></a>语法</h4><figure class="highlight prolog"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iconv -f encoding [-t encoding] [inputfile]...</span><br></pre></td></tr></table></figure>
+<h4 id="选项-7"><a href="#选项-7" class="headerlink" title="选项"></a>选项</h4><figure class="highlight haml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">-<span class="ruby">f encoding <span class="symbol">:</span>把字符从encoding编码开始转换。 </span></span><br><span class="line"><span class="ruby">-t encoding <span class="symbol">:</span>把字符转换到encoding编码。 </span></span><br><span class="line"><span class="ruby">-l <span class="symbol">:</span>列出已知的编码字符集合 </span></span><br><span class="line"><span class="ruby">-o file <span class="symbol">:</span>指定输出文件 </span></span><br><span class="line"><span class="ruby">-c <span class="symbol">:</span>忽略输出的非法字符 </span></span><br><span class="line"><span class="ruby">-s <span class="symbol">:</span>禁止警告信息，但不是错误信息 </span></span><br><span class="line"><span class="ruby">--verbose <span class="symbol">:</span>显示进度信息</span></span><br></pre></td></tr></table></figure>
+<h4 id="实例-14"><a href="#实例-14" class="headerlink" title="实例"></a>实例</h4><figure class="highlight vala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#1. 文件装换</span></span><br><span class="line">iconv -f ISO88592 -t UTF8 &lt; input.txt &gt; -o &lt; output.txt &gt;</span><br><span class="line"><span class="meta">#ISO88592：原编码格式</span></span><br><span class="line"><span class="meta">#UTF8：要转换的编码格式</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#2. 转换网页</span></span><br><span class="line">curl -s http:<span class="comment">//www.dreamdu.com/ | iconv -f utf8 -t gbk</span></span><br><span class="line">curl -s http:<span class="comment">//www.google.com.hk/ | iconv -f big5 -t gbk</span></span><br></pre></td></tr></table></figure>
+<h3 id="touch命令"><a href="#touch命令" class="headerlink" title="touch命令"></a>touch命令</h3><p>touch命令有两个功能：</p>
+<ul>
+<li>是用于把已存在文件的时间标签更新为系统当前的时间（默认方式），它们的数据将原封不动地保留下来；</li>
+<li>是用来创建新的空文件。 语法 touch(选项)(参数) </li>
+</ul>
+<h4 id="实例-15"><a href="#实例-15" class="headerlink" title="实例"></a>实例</h4><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">touch</span> <span class="selector-tag">demo</span><span class="selector-class">.php</span></span><br></pre></td></tr></table></figure>
+<h3 id="unlink命令"><a href="#unlink命令" class="headerlink" title="unlink命令"></a>unlink命令</h3><p>同<code>rm</code>，都是用于删除文件</p>
+<h2 id="文件权限属性设置"><a href="#文件权限属性设置" class="headerlink" title="文件权限属性设置"></a>文件权限属性设置</h2><h3 id="chmod命令"><a href="#chmod命令" class="headerlink" title="chmod命令"></a>chmod命令</h3><p>chmod命令用来变更文件或目录的权限。</p>
+<p>在UNIX系统家族里，文件或目录权限的控制分别以读取、写入、执行3种一般权限来区分，另有3种特殊权限可供运用。用户可以使用chmod指令去变更文件与目录的权限，设置方式采用文字或数字代号皆可。符号连接的权限无法变更，如果用户对符号连接修改权限，其改变会作用在被连接的原始文件。 </p>
+<p>权限范围的表示法如下： </p>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">u User，即文件或目录的拥有者； </span><br><span class="line">g Group，即文件或目录的所属群组； </span><br><span class="line">o Other，除了文件或目录拥有者或所属群组之外，其他用户皆属于这个范围； </span><br><span class="line">a All，即全部的用户，包含拥有者，所属群组以及其他用户； </span><br><span class="line">r 读取权限，数字代号为“<span class="number">4</span>”; </span><br><span class="line">w 写入权限，数字代号为“<span class="number">2</span>”； </span><br><span class="line">x 执行或切换权限，数字代号为“<span class="number">1</span>”； </span><br><span class="line">- 不具任何权限，数字代号为“<span class="number">0</span>”； </span><br><span class="line">s 特殊功能说明：变更文件或目录的权限。</span><br></pre></td></tr></table></figure>
+<h4 id="实例-16"><a href="#实例-16" class="headerlink" title="实例"></a>实例</h4><p><img src="http://man.linuxde.net/wp-content/uploads/2013/11/chmod.gif" alt=""></p>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">chmod</span> u+<span class="keyword">x</span>,g+w f01　　//为文件f01设置自己可以执行，组员可以写入的权限 </span><br><span class="line"><span class="keyword">chmod</span> u=rwx,g=rw,o=r f01 </span><br><span class="line"><span class="keyword">chmod</span> <span class="number">764</span> f01 </span><br><span class="line"><span class="keyword">chmod</span> a+<span class="keyword">x</span> f01　　//对文件f01的u,g,o都设置可执行属性</span><br><span class="line"></span><br><span class="line"><span class="keyword">chown</span> user:market f01　　//把文件f01给uesr，添加到market组</span><br></pre></td></tr></table></figure>
+<h3 id="stat命令"><a href="#stat命令" class="headerlink" title="stat命令"></a>stat命令</h3><p>stat命令用于显示文件的状态信息。stat命令的输出信息比ls命令的输出信息要更详细。</p>
+<h3 id="file命令"><a href="#file命令" class="headerlink" title="file命令"></a>file命令</h3><p>file命令用来探测给定文件的类型。file命令对文件的检查分为文件系统、魔法幻数检查和语言检查3个过程</p>
+<h4 id="实例-17"><a href="#实例-17" class="headerlink" title="实例"></a>实例</h4><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">localhos<span class="variable">t:Documents</span> Ken$ <span class="keyword">file</span> aaaaaaa </span><br><span class="line">aaaaaa<span class="variable">a:</span> ASCII text, with <span class="keyword">no</span> <span class="built_in">line</span> terminators</span><br></pre></td></tr></table></figure>
+<h2 id="文件过滤分割与合并"><a href="#文件过滤分割与合并" class="headerlink" title="文件过滤分割与合并"></a>文件过滤分割与合并</h2><h3 id="grep命令"><a href="#grep命令" class="headerlink" title="grep命令"></a>grep命令</h3><p>grep是一种强大的文本搜索工具，它能使用正则表达式搜索文本，并把匹配的行打印出来。</p>
+<h4 id="选项-8"><a href="#选项-8" class="headerlink" title="选项"></a>选项</h4><figure class="highlight haml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">-<span class="ruby">c 计算符合范本样式的列数</span></span><br><span class="line"><span class="ruby">-w 只显示全字符合的列 </span></span><br><span class="line"><span class="ruby">-x 只显示全列符合的列</span></span><br><span class="line"><span class="ruby">-i 忽略字符大小写的差别</span></span><br><span class="line"><span class="ruby">-y 此参数效果跟“-i”相同 </span></span><br><span class="line"><span class="ruby">-o 只输出文件中匹配到的部分</span></span><br><span class="line"><span class="ruby">-n 在显示符合范本样式的那一列之前，标示出该列的编号</span></span><br><span class="line"><span class="ruby">-l 列出文件内容符合指定的范本样式的文件名称</span></span><br><span class="line"><span class="ruby">-E 使用扩展正则表达式</span></span><br><span class="line"><span class="ruby">-q 不显示任何信息</span></span><br><span class="line"><span class="ruby">-R/-r 递归的查找</span></span><br></pre></td></tr></table></figure>
+<h4 id="实例-18"><a href="#实例-18" class="headerlink" title="实例"></a>实例</h4><figure class="highlight vala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#在文件中搜索一个单词，命令会返回一个包含“match_pattern”的文本行： </span></span><br><span class="line">grep <span class="string">"match_pattern"</span> file_name </span><br><span class="line"></span><br><span class="line"><span class="meta">#在多个文件中查找： </span></span><br><span class="line">grep <span class="string">"match_pattern"</span> file_1 file_2 file_3 ...</span><br><span class="line"></span><br><span class="line"><span class="meta">#标记匹配颜色 --color=auto 选项： </span></span><br><span class="line">grep <span class="string">"match_pattern"</span> file_name --color=auto</span><br><span class="line"></span><br><span class="line"><span class="meta">#使用正则表达式 -E 选项： </span></span><br><span class="line">grep -E <span class="string">"[1-9]+"</span>  file_name</span><br><span class="line"></span><br><span class="line"><span class="meta">#统计文件或者文本中包含匹配字符串的行数 -c 选项： </span></span><br><span class="line">grep -c <span class="string">"text"</span> file_name</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">#输出包含匹配字符串的行数 -n 选项： </span></span><br><span class="line">grep <span class="string">"text"</span> -n file_name </span><br><span class="line"><span class="meta">#多个文件 </span></span><br><span class="line">grep <span class="string">"text"</span> -n file_1 file_2</span><br><span class="line"></span><br><span class="line"><span class="meta">#搜索多个文件并查找匹配文本在哪些文件中： </span></span><br><span class="line">grep -l <span class="string">"text"</span> file1 file2 file3...</span><br><span class="line"></span><br><span class="line"><span class="meta">#在多级目录中对文本进行递归搜索： </span></span><br><span class="line">grep <span class="string">"text"</span> . -r -n</span><br><span class="line"></span><br><span class="line"><span class="meta">#在grep搜索结果中包括或者排除指定文件： </span></span><br><span class="line"><span class="meta">#只在目录中所有的.php和.html文件中递归搜索字符"main()" </span></span><br><span class="line">grep <span class="string">"main()"</span> . -r --include *.&#123;php,html&#125; </span><br><span class="line"><span class="meta">#在搜索结果中排除所有README文件 </span></span><br><span class="line">grep <span class="string">"main()"</span> . -r --exclude <span class="string">"README"</span> </span><br><span class="line"><span class="meta">#在搜索结果中排除filelist文件列表里的文件 </span></span><br><span class="line">grep <span class="string">"main()"</span> . -r --exclude-from filelist</span><br></pre></td></tr></table></figure>
+<h3 id="wc命令"><a href="#wc命令" class="headerlink" title="wc命令"></a>wc命令</h3><p>wc命令用来计算数字。利用wc指令我们可以计算文件的Byte数、字数或是列数，若不指定文件名称，或是所给予的文件名为“-”，则wc指令会从标准输入设备读取数据。 </p>
+<h4 id="语法-13"><a href="#语法-13" class="headerlink" title="语法"></a>语法</h4><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">wc</span><span class="params">(选项)</span><span class="params">(参数)</span></span></span><br></pre></td></tr></table></figure>
+<h4 id="选项-9"><a href="#选项-9" class="headerlink" title="选项"></a>选项</h4><figure class="highlight haml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">-<span class="ruby">c或--bytes或——chars：只显示Bytes数； </span></span><br><span class="line"><span class="ruby">-l或——lines：只显示列数； </span></span><br><span class="line"><span class="ruby">-w或——words：只显示字数。</span></span><br></pre></td></tr></table></figure>
+<h4 id="实例-19"><a href="#实例-19" class="headerlink" title="实例"></a>实例</h4><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">localhost:Server-v1 Ken$ wc  api<span class="selector-class">.php</span> </span><br><span class="line">      <span class="number">94</span>     <span class="number">248</span>    <span class="number">2096</span> api.php</span><br><span class="line">localhost:Server-v1 Ken$ wc -w  api<span class="selector-class">.php</span> </span><br><span class="line">     <span class="number">248</span> api.php</span><br><span class="line">localhost:Server-v1 Ken$ wc -l  api<span class="selector-class">.php</span> </span><br><span class="line">      <span class="number">94</span> api.php</span><br><span class="line">localhost:Server-v1 Ken$ wc -c  api<span class="selector-class">.php</span> </span><br><span class="line">    <span class="number">2096</span> api.php</span><br></pre></td></tr></table></figure>
+<h2 id="文件压缩与解压"><a href="#文件压缩与解压" class="headerlink" title="文件压缩与解压"></a>文件压缩与解压</h2><h3 id="tar命令"><a href="#tar命令" class="headerlink" title="tar命令"></a>tar命令</h3><p>利用tar命令，可以把一大堆的文件和目录全部打包成一个文件，这对于备份文件或将几个文件组合成为一个文件以便于网络传输是非常有用的。</p>
+<p>首先要弄清两个概念：<code>打包和压缩</code></p>
+<ul>
+<li>打包是指将一大堆文件或目录变成一个总的文件；</li>
+<li>压缩则是将一个大的文件通过一些压缩算法变成一个小文件。 </li>
+</ul>
+<p>为什么要区分这两个概念呢？</p>
+<blockquote>
+<p>这源于Linux中很多压缩程序只能针对一个文件进行压缩，这样当你想要压缩一大堆文件时，你得先将这一大堆文件先打成一个包（tar命令），然后再用压缩程序进行压缩（gzip bzip2命令）。</p>
+</blockquote>
+<h4 id="语法-14"><a href="#语法-14" class="headerlink" title="语法"></a>语法</h4><figure class="highlight erlang"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">tar</span> <span class="params">(选项)</span>  <span class="params">(参数)</span></span></span><br></pre></td></tr></table></figure>
+<h4 id="选项-10"><a href="#选项-10" class="headerlink" title="选项"></a>选项</h4><figure class="highlight haml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">-<span class="ruby">A或--catenate：新增文件到以存在的备份文件； </span></span><br><span class="line"><span class="ruby">-B：设置区块大小； </span></span><br><span class="line"><span class="ruby">-c或--create：建立新的备份文件； </span></span><br><span class="line"><span class="ruby">-C &lt;目录&gt;：这个选项用在解压缩，若要在特定目录解压缩，可以使用这个选项。 </span></span><br><span class="line"><span class="ruby">-d：记录文件的差别； </span></span><br><span class="line"><span class="ruby">-x或--extract或--get：从备份文件中还原文件； </span></span><br><span class="line"><span class="ruby">-t或--list：列出备份文件的内容； </span></span><br><span class="line"><span class="ruby">-z或--gzip或--ungzip：通过gzip指令处理备份文件； </span></span><br><span class="line"><span class="ruby">-Z或--compress或--uncompress：通过compress指令处理备份文件； </span></span><br><span class="line"><span class="ruby">-<span class="symbol">f:</span> 使用档名，请留意，在 f 之后要立即接档名喔！不要再加参数！</span></span><br><span class="line"><span class="ruby">-v或--verbose：显示指令执行过程； </span></span><br><span class="line"><span class="ruby">-r：添加文件到已经压缩的文件； </span></span><br><span class="line"><span class="ruby">-u：添加改变了和现有的文件到已经存在的压缩文件； </span></span><br><span class="line"><span class="ruby">-j：支持bzip2解压文件； </span></span><br><span class="line"><span class="ruby">-v：显示操作过程； </span></span><br><span class="line"><span class="ruby">-l：文件系统边界设置； </span></span><br><span class="line"><span class="ruby">-k：保留原有文件不覆盖； </span></span><br><span class="line"><span class="ruby">-m：保留文件不被覆盖； </span></span><br><span class="line"><span class="ruby">-w：确认压缩文件的正确性；</span></span><br><span class="line"><span class="ruby">-x：解压 </span></span><br><span class="line"><span class="ruby">-p或--same-permissions：用原来的文件权限还原文件； </span></span><br><span class="line"><span class="ruby">-P或--absolute-names：文件名使用绝对名称，不移除文件名称前的“/”号；</span></span><br></pre></td></tr></table></figure>
+<h4 id="参数-6"><a href="#参数-6" class="headerlink" title="参数"></a>参数</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">文件或目录：指定要打包的文件或目录列表。</span><br></pre></td></tr></table></figure>
+<h4 id="实例-20"><a href="#实例-20" class="headerlink" title="实例"></a>实例</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">范例一：将整个 /etc 目录下的文件全部打包成为 /tmp/etc.tar</span></span><br><span class="line">[txw1958@redhat ~]# tar -cvf /tmp/etc.tar /etc      　　　　&lt;==仅打包，不压缩！ </span><br><span class="line">[txw1958@redhat ~]# tar -zcvf /tmp/etc.tar.gz /etc  　　　　&lt;==打包后，以 gzip 压缩 </span><br><span class="line">[txw1958@redhat ~]# tar -jcvf /tmp/etc.tar.bz2 /etc　　　　 &lt;==打包后，以 bzip2 压缩 </span><br><span class="line"><span class="meta">#</span><span class="bash"> 特别注意，在参数 f 之后的文件档名是自己取的，我们习惯上都用 .tar 来作为辨识。 </span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 如果加 z 参数，则以 .tar.gz 或 .tgz 来代表 gzip 压缩过的 tar file ～ </span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 如果加 j 参数，则以 .tar.bz2 来作为附档名啊～ </span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 上述指令在执行的时候，会显示一个警告讯息： </span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 『tar: Removing leading `/<span class="string">" from member names』那是关於绝对路径的特殊设定。</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">范例二：查阅上述 /tmp/etc.tar.gz 文件内有哪些文件？</span></span><br><span class="line">[txw1958@redhat ~]# tar -ztvf /tmp/etc.tar.gz </span><br><span class="line"><span class="meta">#</span><span class="bash"> 由於我们使用 gzip 压缩，所以要查阅该 tar file 内的文件时， </span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 就得要加上 z 这个参数了！这很重要的！</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">范例三：将 /tmp/etc.tar.gz 文件解压缩在 /usr/<span class="built_in">local</span>/src 底下</span></span><br><span class="line">[txw1958@redhat src]# tar -zxvf /tmp/etc.tar.gz </span><br><span class="line"><span class="meta">#</span><span class="bash"> 在预设的情况下，我们可以将压缩档在任何地方解开的！以这个范例来说， </span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 我先将工作目录变换到 /usr/<span class="built_in">local</span>/src 底下，并且解开 /tmp/etc.tar.gz ， </span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 则解开的目录会在 /usr/<span class="built_in">local</span>/src/etc 呢！另外，如果您进入 /usr/<span class="built_in">local</span>/src/etc </span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 则会发现，该目录下的文件属性与 /etc/ 可能会有所不同喔！</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">范例四：在 /tmp 底下，我只想要将 /tmp/etc.tar.gz 内的 etc/passwd 解开而已</span></span><br><span class="line">[txw1958@redhat ~]# cd /tmp </span><br><span class="line">[txw1958@redhat tmp]# tar -zxvf /tmp/etc.tar.gz etc/passwd </span><br><span class="line"><span class="meta">#</span><span class="bash"> 我可以透过 tar -ztvf 来查阅 tarfile 内的文件名称，如果单只要一个文件， </span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 就可以透过这个方式来下达！注意到！ etc.tar.gz 内的根目录 / 是被拿掉了！</span></span><br></pre></td></tr></table></figure>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><ol>
+<li><a href="http://man.linuxde.net/" target="_blank" rel="external">Linux命令大全</a></li>
+<li><a href="http://www.cnblogs.com/txw1958/archive/2012/09/13/linux-tar.html" target="_blank" rel="external">方倍工作室</a></li>
+</ol>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Linux/" rel="tag">#Linux</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/01/18/git-common-use/" rel="next" title="Git的日常使用命令">
+                <i class="fa fa-chevron-left"></i> Git的日常使用命令
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/01/26/php-mysqli-common-use/" rel="prev" title="PHP扩展Mysqli常用操作">
+                PHP扩展Mysqli常用操作 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+        </div>
+
+        
+
+
+        
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/01/23/Linux-file-manage/"
+           data-title="Linux文件管理" data-url="http://yoursite.com/2016/01/23/Linux-file-manage/">
+      </div>
+    
+  </div>
+
+
+      </div>
+
+      
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/uploads/avatar.jpg" alt="Song Gao" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Song Gao</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">56</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">15</span>
+              <span class="site-state-item-name">分类</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">43</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Code-Ken" target="_blank">
+                  
+                    <i class="fa fa-github"></i> GitHub
+                  
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="mailto:gaosong0301@foxmail.com" target="_blank">
+                  
+                    <i class="fa fa-globe"></i> Email
+                  
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://7xnp4f.com1.z0.glb.clouddn.com/weixin.jpg" target="_blank">
+                  
+                    <i class="fa fa-weixin"></i> Weixin
+                  
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator">
+            <i class="fa fa-angle-double-up"></i>
+          </div>
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#目录基本操作"><span class="nav-number">1.</span> <span class="nav-text">目录基本操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ls命令"><span class="nav-number">1.1.</span> <span class="nav-text">ls命令</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#语法"><span class="nav-number">1.1.1.</span> <span class="nav-text">语法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#选项"><span class="nav-number">1.1.2.</span> <span class="nav-text">选项</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#参数"><span class="nav-number">1.1.3.</span> <span class="nav-text">参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#实例"><span class="nav-number">1.1.4.</span> <span class="nav-text">实例</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pwd命令"><span class="nav-number">1.2.</span> <span class="nav-text">pwd命令</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#语法-1"><span class="nav-number">1.2.1.</span> <span class="nav-text">语法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#实例-1"><span class="nav-number">1.2.2.</span> <span class="nav-text">实例</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cd命令"><span class="nav-number">1.3.</span> <span class="nav-text">cd命令</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#语法-2"><span class="nav-number">1.3.1.</span> <span class="nav-text">语法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#实例-2"><span class="nav-number">1.3.2.</span> <span class="nav-text">实例</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mv命令"><span class="nav-number">1.4.</span> <span class="nav-text">mv命令</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#语法-3"><span class="nav-number">1.4.1.</span> <span class="nav-text">语法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#实例-3"><span class="nav-number">1.4.2.</span> <span class="nav-text">实例</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cp命令"><span class="nav-number">1.5.</span> <span class="nav-text">cp命令</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#语法-4"><span class="nav-number">1.5.1.</span> <span class="nav-text">语法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#实例-4"><span class="nav-number">1.5.2.</span> <span class="nav-text">实例</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#rm命令"><span class="nav-number">1.6.</span> <span class="nav-text">rm命令</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#语法-5"><span class="nav-number">1.6.1.</span> <span class="nav-text">语法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#选项-1"><span class="nav-number">1.6.2.</span> <span class="nav-text">选项</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#参数-1"><span class="nav-number">1.6.3.</span> <span class="nav-text">参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#实例-5"><span class="nav-number">1.6.4.</span> <span class="nav-text">实例</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mkdir命令"><span class="nav-number">1.7.</span> <span class="nav-text">mkdir命令</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#语法-6"><span class="nav-number">1.7.1.</span> <span class="nav-text">语法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#选项-2"><span class="nav-number">1.7.2.</span> <span class="nav-text">选项</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#参数-2"><span class="nav-number">1.7.3.</span> <span class="nav-text">参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#实例-6"><span class="nav-number">1.7.4.</span> <span class="nav-text">实例</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#rmdir命令"><span class="nav-number">1.8.</span> <span class="nav-text">rmdir命令</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#语法-7"><span class="nav-number">1.8.1.</span> <span class="nav-text">语法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#实例-7"><span class="nav-number">1.8.2.</span> <span class="nav-text">实例</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文件内容查看"><span class="nav-number">2.</span> <span class="nav-text">文件内容查看</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#tail命令"><span class="nav-number">2.1.</span> <span class="nav-text">tail命令</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#语法-8"><span class="nav-number">2.1.1.</span> <span class="nav-text">语法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#选项-3"><span class="nav-number">2.1.2.</span> <span class="nav-text">选项</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#参数-3"><span class="nav-number">2.1.3.</span> <span class="nav-text">参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#实例-8"><span class="nav-number">2.1.4.</span> <span class="nav-text">实例</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#head命令"><span class="nav-number">2.2.</span> <span class="nav-text">head命令</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#语法-9"><span class="nav-number">2.2.1.</span> <span class="nav-text">语法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#选项-4"><span class="nav-number">2.2.2.</span> <span class="nav-text">选项</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#参数-4"><span class="nav-number">2.2.3.</span> <span class="nav-text">参数</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#more命令"><span class="nav-number">2.3.</span> <span class="nav-text">more命令</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#语法-10"><span class="nav-number">2.3.1.</span> <span class="nav-text">语法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#选项-5"><span class="nav-number">2.3.2.</span> <span class="nav-text">选项</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#参数-5"><span class="nav-number">2.3.3.</span> <span class="nav-text">参数</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#less命令"><span class="nav-number">2.4.</span> <span class="nav-text">less命令</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文件查找和比较"><span class="nav-number">3.</span> <span class="nav-text">文件查找和比较</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#which命令"><span class="nav-number">3.1.</span> <span class="nav-text">which命令</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#实例-9"><span class="nav-number">3.1.1.</span> <span class="nav-text">实例</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#whereis命令"><span class="nav-number">3.2.</span> <span class="nav-text">whereis命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#find命令"><span class="nav-number">3.3.</span> <span class="nav-text">find命令</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#语法-11"><span class="nav-number">3.3.1.</span> <span class="nav-text">语法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#选项-6"><span class="nav-number">3.3.2.</span> <span class="nav-text">选项</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#实例-10"><span class="nav-number">3.3.3.</span> <span class="nav-text">实例</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#locate-slocate命令"><span class="nav-number">3.4.</span> <span class="nav-text">locate/slocate命令</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#实例-11"><span class="nav-number">3.4.1.</span> <span class="nav-text">实例</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#diff命令"><span class="nav-number">3.5.</span> <span class="nav-text">diff命令</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#实例-12"><span class="nav-number">3.5.1.</span> <span class="nav-text">实例</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cmp命令"><span class="nav-number">3.6.</span> <span class="nav-text">cmp命令</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#实例-13"><span class="nav-number">3.6.1.</span> <span class="nav-text">实例</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文件处理"><span class="nav-number">4.</span> <span class="nav-text">文件处理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#iconv命令"><span class="nav-number">4.1.</span> <span class="nav-text">iconv命令</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#语法-12"><span class="nav-number">4.1.1.</span> <span class="nav-text">语法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#选项-7"><span class="nav-number">4.1.2.</span> <span class="nav-text">选项</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#实例-14"><span class="nav-number">4.1.3.</span> <span class="nav-text">实例</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#touch命令"><span class="nav-number">4.2.</span> <span class="nav-text">touch命令</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#实例-15"><span class="nav-number">4.2.1.</span> <span class="nav-text">实例</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#unlink命令"><span class="nav-number">4.3.</span> <span class="nav-text">unlink命令</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文件权限属性设置"><span class="nav-number">5.</span> <span class="nav-text">文件权限属性设置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#chmod命令"><span class="nav-number">5.1.</span> <span class="nav-text">chmod命令</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#实例-16"><span class="nav-number">5.1.1.</span> <span class="nav-text">实例</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#stat命令"><span class="nav-number">5.2.</span> <span class="nav-text">stat命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#file命令"><span class="nav-number">5.3.</span> <span class="nav-text">file命令</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#实例-17"><span class="nav-number">5.3.1.</span> <span class="nav-text">实例</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文件过滤分割与合并"><span class="nav-number">6.</span> <span class="nav-text">文件过滤分割与合并</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#grep命令"><span class="nav-number">6.1.</span> <span class="nav-text">grep命令</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#选项-8"><span class="nav-number">6.1.1.</span> <span class="nav-text">选项</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#实例-18"><span class="nav-number">6.1.2.</span> <span class="nav-text">实例</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#wc命令"><span class="nav-number">6.2.</span> <span class="nav-text">wc命令</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#语法-13"><span class="nav-number">6.2.1.</span> <span class="nav-text">语法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#选项-9"><span class="nav-number">6.2.2.</span> <span class="nav-text">选项</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#实例-19"><span class="nav-number">6.2.3.</span> <span class="nav-text">实例</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文件压缩与解压"><span class="nav-number">7.</span> <span class="nav-text">文件压缩与解压</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#tar命令"><span class="nav-number">7.1.</span> <span class="nav-text">tar命令</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#语法-14"><span class="nav-number">7.1.1.</span> <span class="nav-text">语法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#选项-10"><span class="nav-number">7.1.2.</span> <span class="nav-text">选项</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#参数-6"><span class="nav-number">7.1.3.</span> <span class="nav-text">参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#实例-20"><span class="nav-number">7.1.4.</span> <span class="nav-text">实例</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文献"><span class="nav-number">8.</span> <span class="nav-text">参考文献</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator">
+            <i class="fa fa-angle-double-down"></i>
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+      
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="icon-next-heart fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Song Gao</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT
+  </a>
+</div>
+
+
+
+      </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+    
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"gaosong"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+    
+     
+
+
+    
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.2"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.2"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+<script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+<script type="text/javascript" src="/js/motion.js?v=0.4.5.2" id="motion.global"></script>
+
+
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.2" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 1 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    motionMiddleWares.sidebar = function () {
+      var $tocContent = $('.post-toc-content');
+      if (CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    };
+  });
+</script>
+
+
+
+  <script type="text/javascript" src="/js/bootstrap.js"></script>
+
+  
+  
+
+  
+  
+
+</body>
+</html>

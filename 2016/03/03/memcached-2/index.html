@@ -1,0 +1,735 @@
+<!doctype html>
+<html class="theme-next   use-motion ">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=0.4.5.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="PHP,memcached," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.2" />
+
+
+
+
+
+
+<meta name="description" content="本文主要讲解memcached的内存存储原理">
+<meta name="keywords" content="PHP,memcached">
+<meta property="og:type" content="article">
+<meta property="og:title" content="memcached第三章——内存存储机制">
+<meta property="og:url" content="http://yoursite.com/2016/03/03/memcached-2/index.html">
+<meta property="og:site_name" content="该死的Hero">
+<meta property="og:description" content="本文主要讲解memcached的内存存储原理">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2016/03/03/memcached-2/1.png">
+<meta property="og:image" content="http://yoursite.com/2016/03/03/memcached-2/2.png">
+<meta property="og:image" content="http://yoursite.com/2016/03/03/memcached-2/2.png">
+<meta property="og:updated_time" content="2017-11-14T13:22:58.806Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="memcached第三章——内存存储机制">
+<meta name="twitter:description" content="本文主要讲解memcached的内存存储原理">
+<meta name="twitter:image" content="http://yoursite.com/2016/03/03/memcached-2/1.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: '',
+    sidebar: 'post',
+    motion: true
+  };
+</script>
+
+  <title> memcached第三章——内存存储机制 | 该死的Hero </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?e705d876ea2b68e5312b4706ccb36b86";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">该死的Hero</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">ACE</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-th fa-fw"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                memcached第三章——内存存储机制
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2016-03-03T21:49:30+08:00" content="2016-03-03">
+              2016-03-03
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/memcached/" itemprop="url" rel="index">
+                    <span itemprop="name">memcached</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/03/03/memcached-2/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/03/03/memcached-2/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><center>本文主要讲解memcached的内存存储原理</center>
+
+<a id="more"></a>
+<h2 id="内存碎片化"><a href="#内存碎片化" class="headerlink" title="内存碎片化"></a>内存碎片化</h2><p>如果用c语言直接 malloc,free来向操作系统申请和释放内存时,在不断的申请和释放过程中,形成了一些很小的内存片断,无法再利用<br><code>这种空闲,但无法利用内存的现象,称为内存的碎片化</code></p>
+<h2 id="Slab-Allocator机制"><a href="#Slab-Allocator机制" class="headerlink" title="Slab Allocator机制"></a>Slab Allocator机制</h2><p>为了缓解内存的碎片化，memcached用Slab Allocator机制来管理内存.</p>
+<p>Slab Allocator 原理:<br>将分配的内存分割成各种尺寸的块(chunk),并把尺寸相同的块分成组(chunk的集合),而且,slab allocator 还有重复使用已分配的内存的目的。也就是说,分配到的内存不会释放,而是重复利用。</p>
+<p><img src="/2016/03/03/memcached-2/1.png" alt=""></p>
+<h2 id="系统如何选择Chunk"><a href="#系统如何选择Chunk" class="headerlink" title="系统如何选择Chunk"></a>系统如何选择Chunk</h2><p>memcached 根据收到的数据的大小, 选择最适合数据大小的chunk组</p>
+<blockquote>
+<p>警示:<br>如果有 100byte 的内容要存,但 122 大小的仓库中的 chunk 满了 并不会寻找更大的,如 144 的仓库来存储,<br>而是把 122 仓库的旧数据踢掉! 详见过期与删除机制 </p>
+</blockquote>
+<p><img src="/2016/03/03/memcached-2/2.png" alt=""></p>
+<h2 id="SlabAllocator的缺点"><a href="#SlabAllocator的缺点" class="headerlink" title="SlabAllocator的缺点"></a>SlabAllocator的缺点</h2><p>Slab Allocator 解决了当初的内存碎片问题,但新的机制也给 memcached 带来了新的问题。<br>这个问题就是,由于分配的是特定长度的内存,因此无法有效利用分配的内存。例如,将 100 字节的数据缓存到 128 字节的 chunk 中,剩余的 28 字节就浪费了 :(</p>
+<p><img src="/2016/03/03/memcached-2/2.png" alt=""></p>
+<h2 id="Grow-Factor增长因子调优"><a href="#Grow-Factor增长因子调优" class="headerlink" title="Grow Factor增长因子调优"></a>Grow Factor增长因子调优</h2><p>memcached 在启动时可以通过­f 选项指定 Growth Factor 因子, 并在某种程度上控制 slab之间的差异. 默认值为 1.25. 但是,在该选项出现之前,这个因子曾经固定为 2,称为”powers of 2”策略。</p>
+<p>增长因子是2时chunk的大小分布</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">gaosongdeMacBook-Pro:~ Ken$ memcached -f <span class="number">2</span> -vvv</span><br><span class="line">slab <span class="class"><span class="keyword">class</span>   1: <span class="type">chunk size        96 perslab   10922</span></span></span><br><span class="line">slab <span class="class"><span class="keyword">class</span>   2: <span class="type">chunk size       192 perslab    5461</span></span></span><br><span class="line">slab <span class="class"><span class="keyword">class</span>   3: <span class="type">chunk size       384 perslab    2730</span></span></span><br><span class="line">slab <span class="class"><span class="keyword">class</span>   4: <span class="type">chunk size       768 perslab    1365</span></span></span><br><span class="line">slab <span class="class"><span class="keyword">class</span>   5: <span class="type">chunk size      1536 perslab     682</span></span></span><br><span class="line">slab <span class="class"><span class="keyword">class</span>   6: <span class="type">chunk size      3072 perslab     341</span></span></span><br><span class="line">slab <span class="class"><span class="keyword">class</span>   7: <span class="type">chunk size      6144 perslab     170</span></span></span><br><span class="line">slab <span class="class"><span class="keyword">class</span>   8: <span class="type">chunk size     12288 perslab      85</span></span></span><br><span class="line">slab <span class="class"><span class="keyword">class</span>   9: <span class="type">chunk size     24576 perslab      42</span></span></span><br><span class="line">slab <span class="class"><span class="keyword">class</span>  10: <span class="type">chunk size     49152 perslab      21</span></span></span><br><span class="line">slab <span class="class"><span class="keyword">class</span>  11: <span class="type">chunk size     98304 perslab      10</span></span></span><br><span class="line">slab <span class="class"><span class="keyword">class</span>  12: <span class="type">chunk size    196608 perslab       5</span></span></span><br><span class="line">slab <span class="class"><span class="keyword">class</span>  13: <span class="type">chunk size    393216 perslab       2</span></span></span><br><span class="line">slab <span class="class"><span class="keyword">class</span>  14: <span class="type">chunk size   1048576 perslab       1</span></span></span><br></pre></td></tr></table></figure>
+<p>增长因子是1.25时chunk的大小分布</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">gaosongdeMacBook-Pro:~ Ken$ memcached -f <span class="number">1.25</span> -vvv</span><br><span class="line">slab <span class="class"><span class="keyword">class</span>   1: <span class="type">chunk size        96 perslab   10922</span></span></span><br><span class="line">slab <span class="class"><span class="keyword">class</span>   2: <span class="type">chunk size       120 perslab    8738</span></span></span><br><span class="line">slab <span class="class"><span class="keyword">class</span>   3: <span class="type">chunk size       152 perslab    6898</span></span></span><br><span class="line">slab <span class="class"><span class="keyword">class</span>   4: <span class="type">chunk size       192 perslab    5461</span></span></span><br><span class="line">slab <span class="class"><span class="keyword">class</span>   5: <span class="type">chunk size       240 perslab    4369</span></span></span><br><span class="line">slab <span class="class"><span class="keyword">class</span>   6: <span class="type">chunk size       304 perslab    3449</span></span></span><br><span class="line">slab <span class="class"><span class="keyword">class</span>   7: <span class="type">chunk size       384 perslab    2730</span></span></span><br><span class="line">slab <span class="class"><span class="keyword">class</span>   8: <span class="type">chunk size       480 perslab    2184</span></span></span><br><span class="line">slab <span class="class"><span class="keyword">class</span>   9: <span class="type">chunk size       600 perslab    1747</span></span></span><br><span class="line">slab <span class="class"><span class="keyword">class</span>  10: <span class="type">chunk size       752 perslab    1394</span></span></span><br><span class="line">slab <span class="class"><span class="keyword">class</span>  11: <span class="type">chunk size       944 perslab    1110</span></span></span><br><span class="line">slab <span class="class"><span class="keyword">class</span>  12: <span class="type">chunk size      1184 perslab     885</span></span></span><br><span class="line">slab <span class="class"><span class="keyword">class</span>  13: <span class="type">chunk size      1480 perslab     708</span></span></span><br><span class="line">slab <span class="class"><span class="keyword">class</span>  14: <span class="type">chunk size      1856 perslab     564</span></span></span><br><span class="line">slab <span class="class"><span class="keyword">class</span>  15: <span class="type">chunk size      2320 perslab     451</span></span></span><br><span class="line">slab <span class="class"><span class="keyword">class</span>  16: <span class="type">chunk size      2904 perslab     361</span></span></span><br><span class="line">slab <span class="class"><span class="keyword">class</span>  17: <span class="type">chunk size      3632 perslab     288</span></span></span><br><span class="line">slab <span class="class"><span class="keyword">class</span>  18: <span class="type">chunk size      4544 perslab     230</span></span></span><br><span class="line">slab <span class="class"><span class="keyword">class</span>  19: <span class="type">chunk size      5680 perslab     184</span></span></span><br><span class="line">slab <span class="class"><span class="keyword">class</span>  20: <span class="type">chunk size      7104 perslab     147</span></span></span><br><span class="line">slab <span class="class"><span class="keyword">class</span>  21: <span class="type">chunk size      8880 perslab     118</span></span></span><br><span class="line">slab <span class="class"><span class="keyword">class</span>  22: <span class="type">chunk size     11104 perslab      94</span></span></span><br><span class="line">slab <span class="class"><span class="keyword">class</span>  23: <span class="type">chunk size     13880 perslab      75</span></span></span><br><span class="line">slab <span class="class"><span class="keyword">class</span>  24: <span class="type">chunk size     17352 perslab      60</span></span></span><br><span class="line">slab <span class="class"><span class="keyword">class</span>  25: <span class="type">chunk size     21696 perslab      48</span></span></span><br><span class="line">slab <span class="class"><span class="keyword">class</span>  26: <span class="type">chunk size     27120 perslab      38</span></span></span><br><span class="line">slab <span class="class"><span class="keyword">class</span>  27: <span class="type">chunk size     33904 perslab      30</span></span></span><br><span class="line">slab <span class="class"><span class="keyword">class</span>  28: <span class="type">chunk size     42384 perslab      24</span></span></span><br><span class="line">slab <span class="class"><span class="keyword">class</span>  29: <span class="type">chunk size     52984 perslab      19</span></span></span><br><span class="line">slab <span class="class"><span class="keyword">class</span>  30: <span class="type">chunk size     66232 perslab      15</span></span></span><br><span class="line">slab <span class="class"><span class="keyword">class</span>  31: <span class="type">chunk size     82792 perslab      12</span></span></span><br><span class="line">slab <span class="class"><span class="keyword">class</span>  32: <span class="type">chunk size    103496 perslab      10</span></span></span><br><span class="line">slab <span class="class"><span class="keyword">class</span>  33: <span class="type">chunk size    129376 perslab       8</span></span></span><br><span class="line">slab <span class="class"><span class="keyword">class</span>  34: <span class="type">chunk size    161720 perslab       6</span></span></span><br><span class="line">slab <span class="class"><span class="keyword">class</span>  35: <span class="type">chunk size    202152 perslab       5</span></span></span><br><span class="line">slab <span class="class"><span class="keyword">class</span>  36: <span class="type">chunk size    252696 perslab       4</span></span></span><br><span class="line">slab <span class="class"><span class="keyword">class</span>  37: <span class="type">chunk size    315872 perslab       3</span></span></span><br><span class="line">slab <span class="class"><span class="keyword">class</span>  38: <span class="type">chunk size    394840 perslab       2</span></span></span><br><span class="line">slab <span class="class"><span class="keyword">class</span>  39: <span class="type">chunk size    493552 perslab       2</span></span></span><br><span class="line">slab <span class="class"><span class="keyword">class</span>  40: <span class="type">chunk size    616944 perslab       1</span></span></span><br><span class="line">slab <span class="class"><span class="keyword">class</span>  41: <span class="type">chunk size    771184 perslab       1</span></span></span><br><span class="line">slab <span class="class"><span class="keyword">class</span>  42: <span class="type">chunk size   1048576 perslab       1</span></span></span><br></pre></td></tr></table></figure>
+<p>可见,组间差距比因子为 2 时小得多,更适合缓存几百字节的记录。从上面的输出结果来看,可能 会觉得有些计算误差,这些误差是为了保持字节数的对齐而故意设置的。 </p>
+<p>将 memcached 引入产品,或是直接使用默认值进行部署时,最好是重新计算一下数据的预期平均长度,调整 growth factor,以获得最恰当的设置。内存是珍贵的资源,浪费就太可惜了。 </p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/PHP/" rel="tag">#PHP</a>
+          
+            <a href="/tags/memcached/" rel="tag">#memcached</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/03/03/memcached-1/" rel="next" title="memcached第二章——基本操作">
+                <i class="fa fa-chevron-left"></i> memcached第二章——基本操作
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/03/04/memcached-3/" rel="prev" title="memcached第四章——过期机制与删除机制">
+                memcached第四章——过期机制与删除机制 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+        </div>
+
+        
+
+
+        
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/03/03/memcached-2/"
+           data-title="memcached第三章——内存存储机制" data-url="http://yoursite.com/2016/03/03/memcached-2/">
+      </div>
+    
+  </div>
+
+
+      </div>
+
+      
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/uploads/avatar.jpg" alt="Song Gao" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Song Gao</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">56</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">15</span>
+              <span class="site-state-item-name">分类</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">43</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Code-Ken" target="_blank">
+                  
+                    <i class="fa fa-github"></i> GitHub
+                  
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="mailto:gaosong0301@foxmail.com" target="_blank">
+                  
+                    <i class="fa fa-globe"></i> Email
+                  
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://7xnp4f.com1.z0.glb.clouddn.com/weixin.jpg" target="_blank">
+                  
+                    <i class="fa fa-weixin"></i> Weixin
+                  
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator">
+            <i class="fa fa-angle-double-up"></i>
+          </div>
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#内存碎片化"><span class="nav-number">1.</span> <span class="nav-text">内存碎片化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Slab-Allocator机制"><span class="nav-number">2.</span> <span class="nav-text">Slab Allocator机制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#系统如何选择Chunk"><span class="nav-number">3.</span> <span class="nav-text">系统如何选择Chunk</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SlabAllocator的缺点"><span class="nav-number">4.</span> <span class="nav-text">SlabAllocator的缺点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Grow-Factor增长因子调优"><span class="nav-number">5.</span> <span class="nav-text">Grow Factor增长因子调优</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator">
+            <i class="fa fa-angle-double-down"></i>
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+      
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="icon-next-heart fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Song Gao</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT
+  </a>
+</div>
+
+
+
+      </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+    
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"gaosong"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+    
+     
+
+
+    
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.2"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.2"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+<script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+<script type="text/javascript" src="/js/motion.js?v=0.4.5.2" id="motion.global"></script>
+
+
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.2" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 1 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    motionMiddleWares.sidebar = function () {
+      var $tocContent = $('.post-toc-content');
+      if (CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    };
+  });
+</script>
+
+
+
+  <script type="text/javascript" src="/js/bootstrap.js"></script>
+
+  
+  
+
+  
+  
+
+</body>
+</html>

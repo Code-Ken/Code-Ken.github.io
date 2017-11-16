@@ -1,0 +1,740 @@
+<!doctype html>
+<html class="theme-next   use-motion ">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=0.4.5.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="PHP,命令行,CLI," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.2" />
+
+
+
+
+
+
+<meta name="description" content="本文主要讲解在命令行下执行PHP">
+<meta name="keywords" content="PHP,命令行,CLI">
+<meta property="og:type" content="article">
+<meta property="og:title" content="在命令行下执行PHP">
+<meta property="og:url" content="http://yoursite.com/2016/01/07/php-cli-use/index.html">
+<meta property="og:site_name" content="该死的Hero">
+<meta property="og:description" content="本文主要讲解在命令行下执行PHP">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/cli-1.png">
+<meta property="og:image" content="http://yoursite.com/cli-2.png">
+<meta property="og:image" content="http://yoursite.com/cli-3.png">
+<meta property="og:image" content="http://yoursite.com/cli-4.png">
+<meta property="og:image" content="http://yoursite.com/cli-5.png">
+<meta property="og:updated_time" content="2017-11-14T13:22:58.814Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="在命令行下执行PHP">
+<meta name="twitter:description" content="本文主要讲解在命令行下执行PHP">
+<meta name="twitter:image" content="http://yoursite.com/cli-1.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: '',
+    sidebar: 'post',
+    motion: true
+  };
+</script>
+
+  <title> 在命令行下执行PHP | 该死的Hero </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?e705d876ea2b68e5312b4706ccb36b86";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">该死的Hero</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">ACE</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-th fa-fw"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                在命令行下执行PHP
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2016-01-07T13:07:57+08:00" content="2016-01-07">
+              2016-01-07
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/PHP/" itemprop="url" rel="index">
+                    <span itemprop="name">PHP</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/01/07/php-cli-use/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/01/07/php-cli-use/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p><center>本文主要讲解在命令行下执行PHP</center><br><a id="more"></a></p>
+<h2 id="CLI"><a href="#CLI" class="headerlink" title="CLI"></a>CLI</h2><p>从版本 4.3.0 开始，PHP 提供了一种新类型的 CLI SAPI（Server Application Programming Interface，服务端应用编程端口）支持，名为 CLI，意为 Command Line Interface，即命令行接口。顾名思义，该 CLI SAPI 模块主要用作 PHP 的开发外壳应用。</p>
+<h2 id="CLI运行PHP代码"><a href="#CLI运行PHP代码" class="headerlink" title="CLI运行PHP代码"></a>CLI运行PHP代码</h2><p>CLI SAPI 模块有以下三种不同的方法来获取要运行的 PHP 代码：<br>1.让 PHP 运行指定文件。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">php</span> <span class="selector-tag">my_script</span><span class="selector-class">.php</span> </span><br><span class="line"><span class="selector-tag">php</span> <span class="selector-tag">-f</span> <span class="selector-tag">my_script</span><span class="selector-class">.php</span></span><br></pre></td></tr></table></figure>
+<p>以上两种方法（使用或不使用 -f 参数）都能够运行给定的 my_script.php 文件。可以选择任何文件来运行，指定的 PHP 脚本并非必须要以 .php 为扩展名，它们可以有任意的文件名和扩展名。<br>2.在命令行直接运行 PHP 代码。</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php -r 'print_r(<span class="name">get_defined_constants</span>())<span class="comment">;'</span></span><br></pre></td></tr></table></figure>
+<p>在使用这种方法时，请注意外壳变量的替代及引号的使用。</p>
+<blockquote>
+<p>Note:<br>请仔细阅读以上范例，在运行代码时没有开始和结束的标记符！加上 -r 参数后，这些标记符是不需要的，加上它们会导致语法错误。</p>
+</blockquote>
+<p>3.<code>(这种没用过。。。)</code>通过标准输入（stdin）提供需要运行的 PHP 代码。<br>以上用法提供了非常强大的功能，使得可以如下范例所示，动态地生成 PHP 代码并通过命令行运行这些代码：<br><figure class="highlight coq"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ some_application | <span class="type">some_filter</span> | <span class="type">php</span> | <span class="type">sort</span> -u &gt;final_output.txt</span><br></pre></td></tr></table></figure></p>
+<p>以上三种运行代码的方法不能同时使用。</p>
+<h2 id="CLI参数详解"><a href="#CLI参数详解" class="headerlink" title="CLI参数详解"></a>CLI参数详解</h2><p><img src="/cli-1.png" alt=""></p>
+<h2 id="CLI传参"><a href="#CLI传参" class="headerlink" title="CLI传参"></a>CLI传参</h2><figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">当使用这个命令执行：php script.php arg1 arg2 arg3</span><br><span class="line"></span><br><span class="line">以上例程的输出类似于：</span><br><span class="line">array(<span class="number">4</span>) &#123;</span><br><span class="line">  [<span class="number">0</span>]=&gt;  <span class="type">string</span>(<span class="number">10</span>) <span class="string">"script.php"</span></span><br><span class="line">  [<span class="number">1</span>]=&gt;  <span class="type">string</span>(<span class="number">4</span>) <span class="string">"arg1"</span></span><br><span class="line">  [<span class="number">2</span>]=&gt;  <span class="type">string</span>(<span class="number">4</span>) <span class="string">"arg2"</span></span><br><span class="line">  [<span class="number">3</span>]=&gt;  <span class="type">string</span>(<span class="number">4</span>) <span class="string">"arg3"</span> </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="CLI交互式shell模式运行php"><a href="#CLI交互式shell模式运行php" class="headerlink" title="CLI交互式shell模式运行php"></a>CLI交互式shell模式运行php</h2><p>用过 Python 的朋友对Python的交互式shell比较熟悉，在命令行下，如果我们直接输入python命令，则会进入python的交互式shell程序，接下来就可以交互式的执行一些计算任务。<br><img src="/cli-2.png" alt=""><br>在PHP命令行中，同样提供了类似的功能，使用<code>-a</code>参数即可进入交互shell模式。<br><img src="/cli-3.png" alt=""></p>
+<h2 id="运行内建的Web服务器"><a href="#运行内建的Web服务器" class="headerlink" title="运行内建的Web服务器"></a>运行内建的Web服务器</h2><p>从PHP 5.4.0开始，PHP的命令行模式提供了一个内建的web服务器。使用<code>-S</code>开始运行web服务。<br>在该目录中，执行以下命令可以启动内建web服务器，并且默认以当前目录为工作目录</p>
+<p><img src="/cli-4.png" alt=""><br><img src="/cli-5.png" alt=""></p>
+<p>以上我们在启动内建服务器的时候，只指定了<code>-S</code>参数让PHP以web服务器的方式运行，这时，PHP会使用当前目录作为工作目录，因此回到当前目录下寻找请求的文件，我们还可以使用<code>-t</code>参数指定其它的目录作为工作目录（文档根目录）。</p>
+<h2 id="查找PHP的配置文件"><a href="#查找PHP的配置文件" class="headerlink" title="查找PHP的配置文件"></a>查找PHP的配置文件</h2><p>在有的时候，由于服务器上软件安装比较混乱，我们可能安装了多个版本的PHP环境，这时候，如何定位我们的PHP程序使用的是那个配置文件就比较重要了。在PHP命令行参数中，提供了<code>--ini</code>参数，使用该参数，可以列出当前PHP的配置文件信息</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">gaosongdeMacBook-<span class="string">Pro:</span>sync Ken$ php --ini</span><br><span class="line">Configuration File (php.ini) <span class="string">Path:</span> <span class="regexp">/usr/</span>local<span class="regexp">/etc/</span>php/<span class="number">5.5</span></span><br><span class="line">Loaded Configuration <span class="string">File:</span>         <span class="regexp">/usr/</span>local<span class="regexp">/etc/</span>php<span class="regexp">/5.5/</span>php.ini</span><br><span class="line">Scan <span class="keyword">for</span> additional .ini files <span class="string">in:</span> <span class="regexp">/usr/</span>local<span class="regexp">/etc/</span>php<span class="regexp">/5.5/</span>conf.d</span><br><span class="line">Additional .ini files <span class="string">parsed:</span>      <span class="regexp">/usr/</span>local<span class="regexp">/etc/</span>php<span class="regexp">/5.5/</span>conf.d/ext-igbinary.ini,</span><br><span class="line"><span class="regexp">/usr/</span>local<span class="regexp">/etc/</span>php<span class="regexp">/5.5/</span>conf.d/ext-libevent.ini,</span><br><span class="line"><span class="regexp">/usr/</span>local<span class="regexp">/etc/</span>php<span class="regexp">/5.5/</span>conf.d/ext-memcache.ini,</span><br><span class="line"><span class="regexp">/usr/</span>local<span class="regexp">/etc/</span>php<span class="regexp">/5.5/</span>conf.d/ext-memcached.ini,</span><br><span class="line"><span class="regexp">/usr/</span>local<span class="regexp">/etc/</span>php<span class="regexp">/5.5/</span>conf.d/ext-mongo.ini,</span><br><span class="line"><span class="regexp">/usr/</span>local<span class="regexp">/etc/</span>php<span class="regexp">/5.5/</span>conf.d/ext-mongodb.ini,</span><br><span class="line"><span class="regexp">/usr/</span>local<span class="regexp">/etc/</span>php<span class="regexp">/5.5/</span>conf.d/ext-xdebug.ini</span><br><span class="line"></span><br><span class="line">gaosongdeMacBook-<span class="string">Pro:</span>sync Ken$</span><br></pre></td></tr></table></figure>
+<h2 id="CLI语法检查"><a href="#CLI语法检查" class="headerlink" title="CLI语法检查"></a>CLI语法检查</h2><p>有时候，我们只需要检查php脚本是否存在语法错误，而不需要执行它，比如在一些编辑器或者IDE中检查PHP文件是否存在语法错误。<br>使用<code>-l</code>（–syntax-check）可以只对PHP文件进行语法检查。<br><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">gaosongdeMacBook-<span class="keyword">Pro</span>:sync Ken$ php -<span class="keyword">l</span> index.php</span><br><span class="line"><span class="keyword">No</span> <span class="keyword">syntax</span> errors detected <span class="keyword">in</span> index.php</span><br><span class="line"></span><br><span class="line">$ php -<span class="keyword">l</span> index.php </span><br><span class="line">PHP <span class="keyword">Parse</span> <span class="keyword">error</span>:  <span class="keyword">syntax</span> <span class="keyword">error</span>, unexpected 'echo' (T_ECHO) <span class="keyword">in</span> index.php <span class="keyword">on</span> <span class="keyword">line</span> 3</span><br><span class="line"><span class="keyword">Parse</span> <span class="keyword">error</span>: <span class="keyword">syntax</span> <span class="keyword">error</span>, unexpected 'echo' (T_ECHO) <span class="keyword">in</span> index.php <span class="keyword">on</span> <span class="keyword">line</span> 3</span><br><span class="line">Errors parsing index.php</span><br></pre></td></tr></table></figure></p>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p>1.<a href="http://segmentfault.com/a/1190000002949021" target="_blank" rel="external">PHP命令行下的世界</a><br>2.<a href="http://php.net/manual/zh/features.commandline.php" target="_blank" rel="external">PHP手册</a></p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/PHP/" rel="tag">#PHP</a>
+          
+            <a href="/tags/命令行/" rel="tag">#命令行</a>
+          
+            <a href="/tags/CLI/" rel="tag">#CLI</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/01/06/how-to-use-phpdoc/" rel="next" title="PhpDocument的使用">
+                <i class="fa fa-chevron-left"></i> PhpDocument的使用
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/01/08/php-mail-send/" rel="prev" title="PHP邮件的发送">
+                PHP邮件的发送 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+        </div>
+
+        
+
+
+        
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/01/07/php-cli-use/"
+           data-title="在命令行下执行PHP" data-url="http://yoursite.com/2016/01/07/php-cli-use/">
+      </div>
+    
+  </div>
+
+
+      </div>
+
+      
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/uploads/avatar.jpg" alt="Song Gao" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Song Gao</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">56</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">15</span>
+              <span class="site-state-item-name">分类</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">43</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Code-Ken" target="_blank">
+                  
+                    <i class="fa fa-github"></i> GitHub
+                  
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="mailto:gaosong0301@foxmail.com" target="_blank">
+                  
+                    <i class="fa fa-globe"></i> Email
+                  
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://7xnp4f.com1.z0.glb.clouddn.com/weixin.jpg" target="_blank">
+                  
+                    <i class="fa fa-weixin"></i> Weixin
+                  
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator">
+            <i class="fa fa-angle-double-up"></i>
+          </div>
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#CLI"><span class="nav-number">1.</span> <span class="nav-text">CLI</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CLI运行PHP代码"><span class="nav-number">2.</span> <span class="nav-text">CLI运行PHP代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CLI参数详解"><span class="nav-number">3.</span> <span class="nav-text">CLI参数详解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CLI传参"><span class="nav-number">4.</span> <span class="nav-text">CLI传参</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CLI交互式shell模式运行php"><span class="nav-number">5.</span> <span class="nav-text">CLI交互式shell模式运行php</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#运行内建的Web服务器"><span class="nav-number">6.</span> <span class="nav-text">运行内建的Web服务器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查找PHP的配置文件"><span class="nav-number">7.</span> <span class="nav-text">查找PHP的配置文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CLI语法检查"><span class="nav-number">8.</span> <span class="nav-text">CLI语法检查</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文献"><span class="nav-number">9.</span> <span class="nav-text">参考文献</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator">
+            <i class="fa fa-angle-double-down"></i>
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+      
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="icon-next-heart fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Song Gao</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT
+  </a>
+</div>
+
+
+
+      </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+    
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"gaosong"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+    
+     
+
+
+    
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.2"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.2"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+<script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+<script type="text/javascript" src="/js/motion.js?v=0.4.5.2" id="motion.global"></script>
+
+
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.2" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 1 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    motionMiddleWares.sidebar = function () {
+      var $tocContent = $('.post-toc-content');
+      if (CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    };
+  });
+</script>
+
+
+
+  <script type="text/javascript" src="/js/bootstrap.js"></script>
+
+  
+  
+
+  
+  
+
+</body>
+</html>

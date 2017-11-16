@@ -1,0 +1,1090 @@
+<!doctype html>
+<html class="theme-next   use-motion ">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=0.4.5.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Linux,Vim," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.2" />
+
+
+
+
+
+
+<meta name="description" content="本文介绍vim的常用操作">
+<meta name="keywords" content="Linux,Vim">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vim操作指南">
+<meta property="og:url" content="http://yoursite.com/2016/01/28/vim-study/index.html">
+<meta property="og:site_name" content="该死的Hero">
+<meta property="og:description" content="本文介绍vim的常用操作">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://images.cnitblog.com/blog/352838/201311/05111232-20205b3d047249fd86c324cbf5354036.png">
+<meta property="og:image" content="http://vbird.dic.ksu.edu.tw/linux_basic/0310vi_files/vim-window-01.jpg">
+<meta property="og:updated_time" content="2017-11-14T13:22:58.822Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Vim操作指南">
+<meta name="twitter:description" content="本文介绍vim的常用操作">
+<meta name="twitter:image" content="http://images.cnitblog.com/blog/352838/201311/05111232-20205b3d047249fd86c324cbf5354036.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: '',
+    sidebar: 'post',
+    motion: true
+  };
+</script>
+
+  <title> Vim操作指南 | 该死的Hero </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?e705d876ea2b68e5312b4706ccb36b86";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">该死的Hero</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">ACE</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-th fa-fw"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Vim操作指南
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2016-01-28T00:26:32+08:00" content="2016-01-28">
+              2016-01-28
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/01/28/vim-study/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/01/28/vim-study/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><center>本文介绍vim的常用操作</center>
+
+<a id="more"></a>
+<h2 id="为什么要学习vim"><a href="#为什么要学习vim" class="headerlink" title="为什么要学习vim"></a>为什么要学习vim</h2><p>因为linux下别无选择。。。。</p>
+<h2 id="vim模式"><a href="#vim模式" class="headerlink" title="vim模式"></a>vim模式</h2><p>vim共分为三种模式:</p>
+<ul>
+<li><p>一般模式</p>
+<blockquote>
+<p>用户打开文档直接进入的就是一般模式,可以用方向键移动光标查看能容,也可以进行复制、粘贴、删除操作</p>
+</blockquote>
+</li>
+<li><p>编辑模式</p>
+<blockquote>
+<p>按下i键进入编辑模式,编辑文件内容,按esc键退出编辑模式</p>
+</blockquote>
+</li>
+<li><p>命令行模式</p>
+<blockquote>
+<p>进行存储、离开、搜索、替换、显示行号等一些动作</p>
+</blockquote>
+</li>
+</ul>
+<p><img src="http://images.cnitblog.com/blog/352838/201311/05111232-20205b3d047249fd86c324cbf5354036.png" alt="vim模式"></p>
+<h2 id="一般模式"><a href="#一般模式" class="headerlink" title="一般模式"></a>一般模式</h2><h3 id="移动光标的方法"><a href="#移动光标的方法" class="headerlink" title="移动光标的方法"></a>移动光标的方法</h3><table>
+<thead>
+<tr>
+<th style="text-align:center">操作</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">h(←)</td>
+<td>左移一个字符</td>
+</tr>
+<tr>
+<td style="text-align:center">j(↓)</td>
+<td>下移一个字符</td>
+</tr>
+<tr>
+<td style="text-align:center">k(↑)</td>
+<td>上移一个字符</td>
+</tr>
+<tr>
+<td style="text-align:center">l(→)</td>
+<td>右移一个字符</td>
+</tr>
+<tr>
+<td style="text-align:center">[Ctrl]+[f]</td>
+<td>屏幕”向下”移动一页</td>
+</tr>
+<tr>
+<td style="text-align:center">[Ctrl]+[b]</td>
+<td>屏幕”向上”移动一页</td>
+</tr>
+<tr>
+<td style="text-align:center">+</td>
+<td>光标移动到非空格符的下一列</td>
+</tr>
+<tr>
+<td style="text-align:center">-</td>
+<td>光标移动到非空格符的上一列</td>
+</tr>
+<tr>
+<td style="text-align:center">n+[space]</td>
+<td>n表示”数字”按下数字后再按空格键,光标会向右移动这一行的n个字符<br>例如20+[space]</td>
+</tr>
+<tr>
+<td style="text-align:center">0</td>
+<td>移动到这一行的最前面字符处</td>
+</tr>
+<tr>
+<td style="text-align:center">$</td>
+<td>移动到这一行的最后面字符处</td>
+</tr>
+<tr>
+<td style="text-align:center">H</td>
+<td>光标移动到这个屏幕的最上方那一行的第一个字符</td>
+</tr>
+<tr>
+<td style="text-align:center">M</td>
+<td>光标移动到这个屏幕的中央那一行的第一个字符</td>
+</tr>
+<tr>
+<td style="text-align:center">L</td>
+<td>光标移动到这个屏幕的最下方那一行的第一个字符</td>
+</tr>
+<tr>
+<td style="text-align:center">G</td>
+<td>移动到这个档案的最后一行</td>
+</tr>
+<tr>
+<td style="text-align:center">nG</td>
+<td>n为数字。移动到这个档案的第n行。例如 20G</td>
+</tr>
+<tr>
+<td style="text-align:center">gg</td>
+<td>移动到这个档案的第一行</td>
+</tr>
+<tr>
+<td style="text-align:center">n+[Enter]</td>
+<td>n为数字。光标向下移动n行</td>
+</tr>
+</tbody>
+</table>
+<h3 id="搜索与取代"><a href="#搜索与取代" class="headerlink" title="搜索与取代"></a>搜索与取代</h3><table>
+<thead>
+<tr>
+<th style="text-align:center">操作</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">/word</td>
+<td>向光标之下寻找一个名称为”word”的字符串</td>
+</tr>
+<tr>
+<td style="text-align:center">?word</td>
+<td>向光标之上寻找一个字符串名称为 word 的字符串</td>
+</tr>
+<tr>
+<td style="text-align:center">n</td>
+<td>这个n是英文按键,表示向下继续搜索word</td>
+</tr>
+<tr>
+<td style="text-align:center">N</td>
+<td>这个N是英文按键。与n刚好相反,表示向上搜索word</td>
+</tr>
+<tr>
+<td style="text-align:center">:n1,n2s/word1/word2/g</td>
+<td>n1与n2 为数字。<br>在第n1与n2行之间寻找word1这个字符串,并将该字符串取代为word2<br> 在100到200行之间搜寻vbird并取代为VBIRD则：<br>[:100,200s/vbird/VBIRD/g]</td>
+</tr>
+<tr>
+<td style="text-align:center">[:1,$s/word1/word2/gc]</td>
+<td>从第一行到最后一行寻找word1字符串,并将该字符串取代为word2<br>且在取代前显示提示字符给用户确认是否需要取代</td>
+</tr>
+</tbody>
+</table>
+<h3 id="复制删除和粘贴"><a href="#复制删除和粘贴" class="headerlink" title="复制删除和粘贴"></a>复制删除和粘贴</h3><table>
+<thead>
+<tr>
+<th style="text-align:center">操作</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">x, X</td>
+<td>x为向后删除一个字符,X为向前删除一个字符</td>
+</tr>
+<tr>
+<td style="text-align:center">nx</td>
+<td>n为数字,连续向后删除 n 个字符。连续删除 10 个字符,”10x”</td>
+</tr>
+<tr>
+<td style="text-align:center">dd</td>
+<td>删除游标所在的那一整行</td>
+</tr>
+<tr>
+<td style="text-align:center">ndd</td>
+<td>n为数字。删除光标所在的向下n列,删除20列,”20dd”</td>
+</tr>
+<tr>
+<td style="text-align:center">d1G</td>
+<td>删除光标所在到第一行的所有数据</td>
+</tr>
+<tr>
+<td style="text-align:center">dG</td>
+<td>删除光标所在到最后一行的所有数据</td>
+</tr>
+<tr>
+<td style="text-align:center">d$</td>
+<td>删除游标所在处,到该行的最后一个字符</td>
+</tr>
+<tr>
+<td style="text-align:center">d0</td>
+<td>删除游标所在处,到该行的最前面一个字符</td>
+</tr>
+<tr>
+<td style="text-align:center">yy</td>
+<td>复制游标所在的那一行</td>
+</tr>
+<tr>
+<td style="text-align:center">nyy</td>
+<td>n为数字。复制光标所在的向下n列,”20yy”,复制20列</td>
+</tr>
+<tr>
+<td style="text-align:center">y1G</td>
+<td>复制游标所在列到第一列的所有数据</td>
+</tr>
+<tr>
+<td style="text-align:center">yG</td>
+<td>复制游标所在列到最后一列的所有数据</td>
+</tr>
+<tr>
+<td style="text-align:center">y0</td>
+<td>复制光标所在的那个字符到该行行首的所有数据</td>
+</tr>
+<tr>
+<td style="text-align:center">p, P</td>
+<td>粘贴命令,p为粘贴在光标下一行,P为粘贴在上一行</td>
+</tr>
+<tr>
+<td style="text-align:center">u</td>
+<td>恢复前一个动作</td>
+</tr>
+<tr>
+<td style="text-align:center">.</td>
+<td>重复前一个动作</td>
+</tr>
+<tr>
+<td style="text-align:center">y+¥</td>
+<td>复制光标所在的那个字符到该行行尾的所有数据</td>
+</tr>
+</tbody>
+</table>
+<h3 id="区块选择"><a href="#区块选择" class="headerlink" title="区块选择"></a>区块选择</h3><p>光标到想选择的地方按下ctrl+c,出现Visual Block后进行选择</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">操作</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">v</td>
+<td>字符选择,会将光标经过的地方反白选择</td>
+</tr>
+<tr>
+<td style="text-align:center">V</td>
+<td>行选择,会将光标经过的行反白选择</td>
+</tr>
+<tr>
+<td style="text-align:center">y</td>
+<td>将反白的地方复制起来</td>
+</tr>
+<tr>
+<td style="text-align:center">d</td>
+<td>将反白的地方删除掉</td>
+</tr>
+</tbody>
+</table>
+<h2 id="插入模式"><a href="#插入模式" class="headerlink" title="插入模式"></a>插入模式</h2><p> 按i a o r进入插入模式,没啥说的</p>
+<h2 id="命令行模式"><a href="#命令行模式" class="headerlink" title="命令行模式"></a>命令行模式</h2><table>
+<thead>
+<tr>
+<th style="text-align:center">操作</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">:w</td>
+<td>将编辑的数据写入硬盘档案中</td>
+</tr>
+<tr>
+<td style="text-align:center">:w!</td>
+<td>若文件属性为”只读”时,强制写入该档案</td>
+</tr>
+<tr>
+<td style="text-align:center">:q</td>
+<td>离开</td>
+</tr>
+<tr>
+<td style="text-align:center">:q!</td>
+<td>强制离开不储存档案</td>
+</tr>
+<tr>
+<td style="text-align:center">:wq</td>
+<td>储存后离开</td>
+</tr>
+<tr>
+<td style="text-align:center">ZZ</td>
+<td>若档案没有更动,则不储存离开,若档案已经被更动过,则储存后离开</td>
+</tr>
+<tr>
+<td style="text-align:center">:w [filename]</td>
+<td>编辑文件另存为filename</td>
+</tr>
+<tr>
+<td style="text-align:center">:r [filename]</td>
+<td>将filename内容插入到当前文件</td>
+</tr>
+<tr>
+<td style="text-align:center">:! command</td>
+<td>暂时离开 vi 到指令列模式下执行 command 的显示结果<br>例如”:! ls “即可在vim查看文件列表</td>
+</tr>
+<tr>
+<td style="text-align:center">:set nu</td>
+<td>显示行号,设定之后,会在每一行的前缀显示该行的行号</td>
+</tr>
+<tr>
+<td style="text-align:center">:set nonu</td>
+<td>与set nu相反,为取消行号</td>
+</tr>
+</tbody>
+</table>
+<h2 id="多窗口功能"><a href="#多窗口功能" class="headerlink" title="多窗口功能"></a>多窗口功能</h2><table>
+<thead>
+<tr>
+<th style="text-align:center">操作</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">:sp [filename]</td>
+<td>开启一个新窗口,如果有加 filename, 表示在新窗口开启一个新档案<br>否则表示两个窗口为同一个档案内容(同步显示)</td>
+</tr>
+<tr>
+<td style="text-align:center">[ctrl]+w</td>
+<td>切换窗口</td>
+</tr>
+</tbody>
+</table>
+<p><img src="http://vbird.dic.ksu.edu.tw/linux_basic/0310vi_files/vim-window-01.jpg" alt=""></p>
+<h2 id="环境参数设置"><a href="#环境参数设置" class="headerlink" title="环境参数设置"></a>环境参数设置</h2><table>
+<thead>
+<tr>
+<th style="text-align:center">操作</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">:set nu</td>
+<td>设定行号</td>
+</tr>
+<tr>
+<td style="text-align:center">:set nonu</td>
+<td>取消行号</td>
+</tr>
+<tr>
+<td style="text-align:center">:set autoindent</td>
+<td>自动缩进</td>
+</tr>
+<tr>
+<td style="text-align:center">:set noautoindent</td>
+<td>不自动缩进</td>
+</tr>
+<tr>
+<td style="text-align:center">:set ruler</td>
+<td>显示右下角状态栏说明｜</td>
+</tr>
+<tr>
+<td style="text-align:center">:set showmode</td>
+<td>是否要显示 –INSERT– 之类的字眼在左下角的状态栏</td>
+</tr>
+<tr>
+<td style="text-align:center">:set all</td>
+<td>显示目前所有的环境参数设定值</td>
+</tr>
+<tr>
+<td style="text-align:center">:set</td>
+<td>显示与系统默认值不同的设定参数</td>
+</tr>
+<tr>
+<td style="text-align:center">:syntax on</td>
+<td>开启语法高亮</td>
+</tr>
+<tr>
+<td style="text-align:center">:syntax off</td>
+<td>关闭语法高亮</td>
+</tr>
+<tr>
+<td style="text-align:center">:set bg=dark</td>
+<td>加深字体颜色</td>
+</tr>
+<tr>
+<td style="text-align:center">:set bg=light</td>
+<td>默认字体颜色</td>
+</tr>
+</tbody>
+</table>
+<h2 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h2><p>1.<a href="http://vbird.dic.ksu.edu.tw/linux_basic/0310vi.php#vi" target="_blank" rel="external">鸟哥的Linux私房菜</a><br>2.《Linux命令行与Shell脚本编程大全》第2版</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Linux/" rel="tag">#Linux</a>
+          
+            <a href="/tags/Vim/" rel="tag">#Vim</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/01/26/php-mysqli-common-use/" rel="next" title="PHP扩展Mysqli常用操作">
+                <i class="fa fa-chevron-left"></i> PHP扩展Mysqli常用操作
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/02/01/redis-1/" rel="prev" title="Redis介绍">
+                Redis介绍 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+        </div>
+
+        
+
+
+        
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/01/28/vim-study/"
+           data-title="Vim操作指南" data-url="http://yoursite.com/2016/01/28/vim-study/">
+      </div>
+    
+  </div>
+
+
+      </div>
+
+      
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/uploads/avatar.jpg" alt="Song Gao" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Song Gao</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">56</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">15</span>
+              <span class="site-state-item-name">分类</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">43</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Code-Ken" target="_blank">
+                  
+                    <i class="fa fa-github"></i> GitHub
+                  
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="mailto:gaosong0301@foxmail.com" target="_blank">
+                  
+                    <i class="fa fa-globe"></i> Email
+                  
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://7xnp4f.com1.z0.glb.clouddn.com/weixin.jpg" target="_blank">
+                  
+                    <i class="fa fa-weixin"></i> Weixin
+                  
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator">
+            <i class="fa fa-angle-double-up"></i>
+          </div>
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么要学习vim"><span class="nav-number">1.</span> <span class="nav-text">为什么要学习vim</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vim模式"><span class="nav-number">2.</span> <span class="nav-text">vim模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一般模式"><span class="nav-number">3.</span> <span class="nav-text">一般模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#移动光标的方法"><span class="nav-number">3.1.</span> <span class="nav-text">移动光标的方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#搜索与取代"><span class="nav-number">3.2.</span> <span class="nav-text">搜索与取代</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#复制删除和粘贴"><span class="nav-number">3.3.</span> <span class="nav-text">复制删除和粘贴</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#区块选择"><span class="nav-number">3.4.</span> <span class="nav-text">区块选择</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#插入模式"><span class="nav-number">4.</span> <span class="nav-text">插入模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#命令行模式"><span class="nav-number">5.</span> <span class="nav-text">命令行模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多窗口功能"><span class="nav-number">6.</span> <span class="nav-text">多窗口功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#环境参数设置"><span class="nav-number">7.</span> <span class="nav-text">环境参数设置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文档"><span class="nav-number">8.</span> <span class="nav-text">参考文档</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator">
+            <i class="fa fa-angle-double-down"></i>
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+      
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="icon-next-heart fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Song Gao</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT
+  </a>
+</div>
+
+
+
+      </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+    
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"gaosong"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+    
+     
+
+
+    
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.2"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.2"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+<script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+<script type="text/javascript" src="/js/motion.js?v=0.4.5.2" id="motion.global"></script>
+
+
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.2" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 1 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    motionMiddleWares.sidebar = function () {
+      var $tocContent = $('.post-toc-content');
+      if (CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    };
+  });
+</script>
+
+
+
+  <script type="text/javascript" src="/js/bootstrap.js"></script>
+
+  
+  
+
+  
+  
+
+</body>
+</html>

@@ -1,0 +1,782 @@
+<!doctype html>
+<html class="theme-next   use-motion ">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=0.4.5.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Linux,Shell," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.2" />
+
+
+
+
+
+
+<meta name="description" content="Shell的学习手册(二)">
+<meta name="keywords" content="Linux,Shell">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Shell入门学习(二)">
+<meta property="og:url" content="http://yoursite.com/2016/01/14/learn-shell-2/index.html">
+<meta property="og:site_name" content="该死的Hero">
+<meta property="og:description" content="Shell的学习手册(二)">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/shell-2.png">
+<meta property="og:image" content="http://yoursite.com/shell-3.png">
+<meta property="og:image" content="http://yoursite.com/shell-4.png">
+<meta property="og:image" content="http://yoursite.com/shell-5.png">
+<meta property="og:image" content="http://yoursite.com/shell-6.png">
+<meta property="og:image" content="http://yoursite.com/shell-7.png">
+<meta property="og:image" content="http://yoursite.com/shell-8.png">
+<meta property="og:image" content="http://yoursite.com/shell-9.png">
+<meta property="og:image" content="http://yoursite.com/shell-10.png">
+<meta property="og:image" content="http://yoursite.com/shell-11.png">
+<meta property="og:image" content="http://yoursite.com/shell-12.png">
+<meta property="og:updated_time" content="2017-11-14T13:22:58.790Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Shell入门学习(二)">
+<meta name="twitter:description" content="Shell的学习手册(二)">
+<meta name="twitter:image" content="http://yoursite.com/shell-2.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: '',
+    sidebar: 'post',
+    motion: true
+  };
+</script>
+
+  <title> Shell入门学习(二) | 该死的Hero </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?e705d876ea2b68e5312b4706ccb36b86";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">该死的Hero</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">ACE</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-th fa-fw"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Shell入门学习(二)
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2016-01-14T13:55:31+08:00" content="2016-01-14">
+              2016-01-14
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/01/14/learn-shell-2/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/01/14/learn-shell-2/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p><center>Shell的学习手册(二)</center><br><a id="more"></a></p>
+<h1 id="Shell语法"><a href="#Shell语法" class="headerlink" title="Shell语法"></a>Shell语法</h1><h2 id="Shell变量"><a href="#Shell变量" class="headerlink" title="Shell变量"></a>Shell变量</h2><p>运行shell时,会同时存在三种变量:<br>1) 局部变量<br>局部变量在脚本或命令中定义,仅在当前shell实例中有效,其他shell启动的程序不能访问局部变量。<br>2) 环境变量<br>所有的程序,包括shell启动的程序,都能访问环境变量,有些程序需要环境变量来保证其正常运行。必要的时候shell脚本也可以定义环境变量。<br>3) shell变量<br>shell变量是由shell程序设置的特殊变量。shell变量中有一部分是环境变量,有一部分是局部变量,这些变量保证了shell的正常运行</p>
+<h3 id="局部变量"><a href="#局部变量" class="headerlink" title="局部变量"></a>局部变量</h3><h4 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h4><p><code>定义变量时,变量名不加美元符号($)!!!</code>如:</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">variableName</span>=<span class="string">"value"</span></span><br></pre></td></tr></table></figure>
+<p><code>注意,变量名和等号之间不能有空格</code></p>
+<p>变量名的命名须遵循如下规则:</p>
+<ul>
+<li>首个字符必须为字母(a-z,A-Z)。</li>
+<li>中间不能有空格,可以使用下划线(_)。</li>
+<li>不能使用标点符号。</li>
+<li>不能使用bash里的关键字(可用help命令查看保留关键字)</li>
+</ul>
+<h4 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h4><p>使用一个定义过的变量要在变量名前面加美元符号($),如</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">your_name=<span class="string">"mozhiyan"</span>   </span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$your_name</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$&#123;your_name&#125;</span></span><br></pre></td></tr></table></figure>
+<p><code>变量名外面的花括号是可选的,加不加都行,加花括号是为了帮助解释器识别变量的边界</code></p>
+<p><code>推荐给所有变量加上花括号,这是个好的编程习惯。</code><br>已定义过的变量可以重新定义:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">aaa=<span class="string">"my aaa"</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$&#123;myUrl&#125;</span></span><br><span class="line">aaa=<span class="string">"your bbb"</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$&#123;myUrl&#125;</span></span><br></pre></td></tr></table></figure>
+<h4 id="只读变量"><a href="#只读变量" class="headerlink" title="只读变量"></a>只读变量</h4><p>使用<code>readonly</code>命令可以将变量定义为只读变量,只读变量的值不能被改变。</p>
+<h4 id="删除变量"><a href="#删除变量" class="headerlink" title="删除变量"></a>删除变量</h4><p>使用<code>unset</code>命令可以删除变量。</p>
+<h3 id="shell变量"><a href="#shell变量" class="headerlink" title="shell变量"></a>shell变量</h3><p>shell变量即特殊变量</p>
+<h4 id="特殊变量列表"><a href="#特殊变量列表" class="headerlink" title="特殊变量列表"></a>特殊变量列表</h4><p><img src="/shell-2.png" alt=""></p>
+<p>运行实例:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"File Name: <span class="variable">$0</span>"</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"First Parameter : <span class="variable">$1</span>"</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"First Parameter : <span class="variable">$2</span>"</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"Quoted Values: <span class="variable">$@</span>"</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"Quoted Values: $*"</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"Total Number of Parameters : <span class="variable">$#</span>"</span></span><br></pre></td></tr></table></figure>
+<p><img src="/shell-3.png" alt=""></p>
+<h4 id="和-的区别"><a href="#和-的区别" class="headerlink" title="$*和$@的区别"></a>$*和$@的区别</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$* 和 <span class="variable">$@</span> 都表示传递给函数或脚本的所有参数,不被双引号(<span class="string">" "</span>)包含时,都以<span class="string">"<span class="variable">$1</span>"</span> <span class="string">"<span class="variable">$2</span>"</span> … <span class="string">"<span class="variable">$n</span>"</span> 的形式输出所有参数。</span><br><span class="line">但是当它们被双引号(<span class="string">" "</span>)包含时,<span class="string">"$*"</span> 会将所有的参数作为一个整体,以<span class="string">"<span class="variable">$1</span> <span class="variable">$2</span> … <span class="variable">$n</span>"</span>的形式输出所有参数；<span class="string">"<span class="variable">$@</span>"</span> 会将各个参数分开,以<span class="string">"<span class="variable">$1</span>"</span> <span class="string">"<span class="variable">$2</span>"</span> … <span class="string">"<span class="variable">$n</span>"</span> 的形式输出所有参数。</span><br></pre></td></tr></table></figure>
+<h3 id="环境变量"><a href="#环境变量" class="headerlink" title="环境变量"></a>环境变量</h3><p>bash shell用一个称作<code>环境变量</code>的特性来存储有关shell会话和工作环境的信息。<br>它允许我们在内存中储存数据,以便运行在shell上的程序和脚本访问。<br>在bash shell中,环境变量分为两类:</p>
+<ul>
+<li>全局变量</li>
+<li>局部变量</li>
+</ul>
+<h4 id="全局环境变量"><a href="#全局环境变量" class="headerlink" title="全局环境变量"></a>全局环境变量</h4><p><code>全局变量不仅对shell会话可见,对所有shell创建的子进程也可见；
+局部变量仅对他们创建的shell可见。</code></p>
+<p>查看全局变量用<code>printenv</code>命令:</p>
+<p><img src="/shell-4.png" alt=""></p>
+<p>如只要显示单个环境变量的值,可用<code>echo</code>命令,当引用环境变量时,必须在环境变量的名称前放置一个<code>$</code>符号</p>
+<p><img src="/shell-5.png" alt=""></p>
+<h4 id="局部环境变量"><a href="#局部环境变量" class="headerlink" title="局部环境变量"></a>局部环境变量</h4><p>即上文的局部变量!!!<br>查看局部变量的列表有些复杂,Linux并没有一个命令只显示局部变量。<code>set</code>命令会显示为某个特定进程设置的所有环境变量,包括全局变量。</p>
+<p><img src="/shell-6.png" alt=""></p>
+<p>除去全局变量剩下的就是局部变量了 ＝ ＝</p>
+<h4 id="设置全局变量"><a href="#设置全局变量" class="headerlink" title="设置全局变量"></a>设置全局变量</h4><p>创建全局变量的方法是先创建一个局部变量,然后再将它通过<code>export</code>命令导入到全局变量中。</p>
+<p><img src="/shell-7.png" alt=""></p>
+<h4 id="设置PATH环境变量"><a href="#设置PATH环境变量" class="headerlink" title="设置PATH环境变量"></a>设置PATH环境变量</h4><p>PATH环境变量是Linux系统上造成最多问题的变量。它定义了命令行输入命令的搜索路径,如果找不到命令,它会产生一个错误。</p>
+<p><img src="/shell-8.png" alt=""></p>
+<p>PATH中的目录之间使用 <code>:</code> 分隔,如果想要添加新的目录到现有的PATH环境变量,无需重头定义,只需要像这样即可:</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>PATH=<span class="variable">$PATH</span><span class="symbol">:/home/user/test</span></span><br></pre></td></tr></table></figure>
+<p>也可以这样添加</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="attribute">PATH</span>=<span class="variable">$PATH</span>:.</span><br></pre></td></tr></table></figure>
+<p>这个单点符代表将当前目录添加到PATH变量中去。</p>
+<h2 id="Shell替换"><a href="#Shell替换" class="headerlink" title="Shell替换"></a>Shell替换</h2><h3 id="特殊字符替换"><a href="#特殊字符替换" class="headerlink" title="特殊字符替换"></a>特殊字符替换</h3><p>如果表达式中包含特殊字符,Shell 将会进行替换。例如,在双引号中使用变量就是一种替换,转义字符也是一种替换。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line">a=10</span><br><span class="line"><span class="built_in">echo</span> -e <span class="string">"Value of a is <span class="variable">$a</span> \n"</span></span><br><span class="line"><span class="comment">#这里 -e 表示对转义字符进行替换。如果不使用 -e 选项,将会原样输出</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"Value of a is <span class="variable">$a</span> \n"</span></span><br></pre></td></tr></table></figure>
+<p><img src="/shell-9.png" alt=""></p>
+<h3 id="命令替换"><a href="#命令替换" class="headerlink" title="命令替换"></a>命令替换</h3><p>命令替换是指Shell可以先执行命令,将输出结果暂时保存,在适当的地方输出。<br>命令替换的语法:</p>
+<figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">`command`</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line">DATE=`date`</span><br><span class="line"><span class="built_in">echo</span> <span class="string">"Date is <span class="variable">$DATE</span>"</span></span><br></pre></td></tr></table></figure>
+<p>输出</p>
+<p><img src="/shell-10.png" alt=""></p>
+<h3 id="变量替换"><a href="#变量替换" class="headerlink" title="变量替换"></a>变量替换</h3><p>变量替换可以根据变量的状态(是否为空、是否定义等)来改变它的值</p>
+<p><img src="/shell-11.png" alt=""></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$&#123;var:-"Variable is not set"&#125;</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"1 - Value of var is <span class="variable">$&#123;var&#125;</span>"</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$&#123;var:="Variable is not set"&#125;</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"2 - Value of var is <span class="variable">$&#123;var&#125;</span>"</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">unset</span> var</span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$&#123;var:+"This is default value"&#125;</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"3 - Value of var is <span class="variable">$var</span>"</span></span><br><span class="line"></span><br><span class="line">var=<span class="string">"Prefix"</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$&#123;var:+"This is default value"&#125;</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"4 - Value of var is <span class="variable">$var</span>"</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">unset</span> var</span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$&#123;var:?"Print this message"&#125;</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"5 - Value of var is <span class="variable">$&#123;var&#125;</span>"</span></span><br></pre></td></tr></table></figure>
+<p><img src="/shell-12.png" alt=""></p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Linux/" rel="tag">#Linux</a>
+          
+            <a href="/tags/Shell/" rel="tag">#Shell</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/01/14/learn-shell-1/" rel="next" title="Shell入门学习(一)">
+                <i class="fa fa-chevron-left"></i> Shell入门学习(一)
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/01/14/learn-shell-3/" rel="prev" title="Shell入门学习(三)">
+                Shell入门学习(三) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+        </div>
+
+        
+
+
+        
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/01/14/learn-shell-2/"
+           data-title="Shell入门学习(二)" data-url="http://yoursite.com/2016/01/14/learn-shell-2/">
+      </div>
+    
+  </div>
+
+
+      </div>
+
+      
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/uploads/avatar.jpg" alt="Song Gao" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Song Gao</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">56</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">15</span>
+              <span class="site-state-item-name">分类</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">43</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Code-Ken" target="_blank">
+                  
+                    <i class="fa fa-github"></i> GitHub
+                  
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="mailto:gaosong0301@foxmail.com" target="_blank">
+                  
+                    <i class="fa fa-globe"></i> Email
+                  
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://7xnp4f.com1.z0.glb.clouddn.com/weixin.jpg" target="_blank">
+                  
+                    <i class="fa fa-weixin"></i> Weixin
+                  
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator">
+            <i class="fa fa-angle-double-up"></i>
+          </div>
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Shell语法"><span class="nav-number">1.</span> <span class="nav-text">Shell语法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Shell变量"><span class="nav-number">1.1.</span> <span class="nav-text">Shell变量</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#局部变量"><span class="nav-number">1.1.1.</span> <span class="nav-text">局部变量</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#定义"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用"><span class="nav-number">1.1.1.2.</span> <span class="nav-text">使用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#只读变量"><span class="nav-number">1.1.1.3.</span> <span class="nav-text">只读变量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#删除变量"><span class="nav-number">1.1.1.4.</span> <span class="nav-text">删除变量</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#shell变量"><span class="nav-number">1.1.2.</span> <span class="nav-text">shell变量</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#特殊变量列表"><span class="nav-number">1.1.2.1.</span> <span class="nav-text">特殊变量列表</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#和-的区别"><span class="nav-number">1.1.2.2.</span> <span class="nav-text">$*和$@的区别</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#环境变量"><span class="nav-number">1.1.3.</span> <span class="nav-text">环境变量</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#全局环境变量"><span class="nav-number">1.1.3.1.</span> <span class="nav-text">全局环境变量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#局部环境变量"><span class="nav-number">1.1.3.2.</span> <span class="nav-text">局部环境变量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#设置全局变量"><span class="nav-number">1.1.3.3.</span> <span class="nav-text">设置全局变量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#设置PATH环境变量"><span class="nav-number">1.1.3.4.</span> <span class="nav-text">设置PATH环境变量</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Shell替换"><span class="nav-number">1.2.</span> <span class="nav-text">Shell替换</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#特殊字符替换"><span class="nav-number">1.2.1.</span> <span class="nav-text">特殊字符替换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#命令替换"><span class="nav-number">1.2.2.</span> <span class="nav-text">命令替换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#变量替换"><span class="nav-number">1.2.3.</span> <span class="nav-text">变量替换</span></a></li></ol></li></ol></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator">
+            <i class="fa fa-angle-double-down"></i>
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+      
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="icon-next-heart fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Song Gao</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT
+  </a>
+</div>
+
+
+
+      </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+    
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"gaosong"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+    
+     
+
+
+    
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.2"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.2"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+<script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+<script type="text/javascript" src="/js/motion.js?v=0.4.5.2" id="motion.global"></script>
+
+
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.2" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 1 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    motionMiddleWares.sidebar = function () {
+      var $tocContent = $('.post-toc-content');
+      if (CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    };
+  });
+</script>
+
+
+
+  <script type="text/javascript" src="/js/bootstrap.js"></script>
+
+  
+  
+
+  
+  
+
+</body>
+</html>

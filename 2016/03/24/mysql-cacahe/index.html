@@ -1,0 +1,756 @@
+<!doctype html>
+<html class="theme-next   use-motion ">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=0.4.5.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Mysql,缓存," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.2" />
+
+
+
+
+
+
+<meta name="description" content="本文主要介绍mysql缓存技术">
+<meta name="keywords" content="Mysql,缓存">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Mysql缓存技术">
+<meta property="og:url" content="http://yoursite.com/2016/03/24/mysql-cacahe/index.html">
+<meta property="og:site_name" content="该死的Hero">
+<meta property="og:description" content="本文主要介绍mysql缓存技术">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-11-14T13:22:58.814Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Mysql缓存技术">
+<meta name="twitter:description" content="本文主要介绍mysql缓存技术">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: '',
+    sidebar: 'post',
+    motion: true
+  };
+</script>
+
+  <title> Mysql缓存技术 | 该死的Hero </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?e705d876ea2b68e5312b4706ccb36b86";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">该死的Hero</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">ACE</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-th fa-fw"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Mysql缓存技术
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2016-03-24T22:47:29+08:00" content="2016-03-24">
+              2016-03-24
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Mysql/" itemprop="url" rel="index">
+                    <span itemprop="name">Mysql</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/03/24/mysql-cacahe/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/03/24/mysql-cacahe/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><center>本文主要介绍mysql缓存技术</center>
+
+<a id="more"></a>
+<h2 id="Mysql缓存特征"><a href="#Mysql缓存特征" class="headerlink" title="Mysql缓存特征"></a>Mysql缓存特征</h2><ul>
+<li>MysqlL查询缓存机制是MySQL数据库中的重要机制之一</li>
+<li>缓存sql文本及查询结果，如果运行相同的sql，服务器直接从缓存中取到结果，而不需要再去解析和执行sql</li>
+<li>Mysql缓存适用于那些不常变化的表</li>
+<li>缓存的结果是通过sessions共享的，所以一个client查询的缓存结果，另一个client也可以使用</li>
+<li>缓存不会返回过时的数据</li>
+</ul>
+<h2 id="哪些情况下Mysql缓存不起作用"><a href="#哪些情况下Mysql缓存不起作用" class="headerlink" title="哪些情况下Mysql缓存不起作用"></a>哪些情况下Mysql缓存不起作用</h2><ul>
+<li>Mysql缓存在分库分表环境下是不起作用的</li>
+<li>执行sql里有触发器,自定义函数,或一些变化的函数和事件时,mysql缓存也是不起作用的</li>
+<li>如果表变化了，那么这个表的所有mysql缓存就都会失效,变化操作包括更新,插入删除</li>
+<li>mysql缓存同样也可以在事务里使用</li>
+</ul>
+<ul>
+<li>查询语句是一个外部查询的子查询时,Mysql缓存是不起作用的</li>
+</ul>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SHOW STATUS LIKE <span class="emphasis">'Qcache_hits'</span>;</span><br><span class="line"><span class="code">+---------------+</span>-------+</span><br><span class="line">| Variable<span class="emphasis">_name | Value |</span></span><br><span class="line"><span class="emphasis">+---------------+-------+</span></span><br><span class="line"><span class="emphasis">| Qcache_</span>hits   | 178   |</span><br><span class="line"><span class="code">+---------------+</span>-------+</span><br><span class="line">1 row in set (0.02 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; SELECT * FROM adminlog WHERE adminlog<span class="emphasis">_id = ANY (SELECT ent_</span>area<span class="emphasis">_id FROM ent);</span></span><br><span class="line"><span class="emphasis">#数据隐藏</span></span><br><span class="line"><span class="emphasis">74 rows in set (0.02 sec)</span></span><br><span class="line"><span class="emphasis"></span></span><br><span class="line"><span class="emphasis">mysql&gt; SHOW STATUS LIKE 'Qcache_</span>hits';                           </span><br><span class="line">| Variable<span class="emphasis">_name | Value |</span></span><br><span class="line"><span class="emphasis">+---------------+-------+</span></span><br><span class="line"><span class="emphasis">| Qcache_</span>hits   | 178   |</span><br><span class="line"><span class="code">+---------------+</span>-------+</span><br><span class="line">1 row in set (0.01 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; SELECT * FROM adminlog WHERE adminlog<span class="emphasis">_id = ANY (SELECT ent_</span>area<span class="emphasis">_id FROM ent);</span></span><br><span class="line"><span class="emphasis">#数据隐藏</span></span><br><span class="line"><span class="emphasis">3 rows in set (0.09 sec)</span></span><br><span class="line"><span class="emphasis"></span></span><br><span class="line"><span class="emphasis">mysql&gt; SHOW STATUS LIKE 'Qcache_</span>hits';                      </span><br><span class="line">| Variable<span class="emphasis">_name | Value |</span></span><br><span class="line"><span class="emphasis">+---------------+-------+</span></span><br><span class="line"><span class="emphasis">| Qcache_</span>hits   | 179   |</span><br><span class="line"><span class="code">+---------------+</span>-------+</span><br><span class="line">1 row in set (0.01 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; SELECT ent<span class="emphasis">_area_</span>id FROM ent; </span><br><span class="line">#数据隐藏</span><br><span class="line">74 rows in set (0.02 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; SHOW STATUS LIKE <span class="emphasis">'Qcache_hits'</span>;</span><br><span class="line"><span class="code">+---------------+</span>-------+</span><br><span class="line">| Variable<span class="emphasis">_name | Value |</span></span><br><span class="line"><span class="emphasis">+---------------+-------+</span></span><br><span class="line"><span class="emphasis">| Qcache_</span>hits   | 179   |</span><br><span class="line"><span class="code">+---------------+</span>-------+</span><br><span class="line">1 row in set (0.02 sec)</span><br></pre></td></tr></table></figure>
+<p>⚠️注意:</p>
+<blockquote>
+<p>查询必须是完全相同的(逐字节相同)才能够被认为是相同的。<br>另外，同样的查询字符串由于其它原因可能认为是不同的。<br>使用不同的数据库、不同的协议版本或者不同默认字符集的查询被认为是不同的查询并且分别进行缓存。</p>
+</blockquote>
+<p>下面sql查询缓存认为是不同的</p>
+<figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> tbl_name  </span><br><span class="line"><span class="keyword">Select</span> * <span class="keyword">from</span> tbl_name</span><br></pre></td></tr></table></figure>
+<h2 id="Mysql缓存相关参数"><a href="#Mysql缓存相关参数" class="headerlink" title="Mysql缓存相关参数"></a>Mysql缓存相关参数</h2><figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; show variables like <span class="emphasis">'%query_cache%'</span>;</span><br><span class="line"><span class="code">+------------------------------+</span>---------+</span><br><span class="line">| Variable<span class="emphasis">_name                | Value   |</span></span><br><span class="line"><span class="emphasis">+------------------------------+---------+</span></span><br><span class="line"><span class="emphasis">| have_</span>query<span class="emphasis">_cache             | YES     |      --查询缓存是否可用</span></span><br><span class="line"><span class="emphasis">| query_</span>cache<span class="emphasis">_limit            | 1048576 |      --可缓存具体查询结果的最大值</span></span><br><span class="line"><span class="emphasis">| query_</span>cache<span class="emphasis">_min_</span>res<span class="emphasis">_unit     | 4096    |      --查询缓存分配的最小块的大小(字节)</span></span><br><span class="line"><span class="emphasis">| query_</span>cache<span class="emphasis">_size             | 599040  |      --查询缓存的大小</span></span><br><span class="line"><span class="emphasis">| query_</span>cache<span class="emphasis">_type             | ON      |      --是否支持查询缓存</span></span><br><span class="line"><span class="emphasis">| query_</span>cache<span class="emphasis">_wlock_</span>invalidate | OFF     |      --控制当有写锁加在表上的时候，是否先让该表相关的 Query Cache失效</span><br><span class="line"><span class="code">+------------------------------+</span>---------+</span><br><span class="line">6 rows in set (0.02 sec)</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p><code>query_cache_min_res_unit</code><br>当查询进行的时候，Mysql把查询结果保存在qurey cache中，但如果要保存的结果比较大，超过query_cache_min_res_unit的值 ，这时候mysql将一边检索结果，一边进行保存结果，所以，有时候并不是把所有结果全部得到后再进行一次性保存，而是每次分配一块query_cache_min_res_unit大小的内存空间保存结果集，使用完后，接着再分配一个这样的块，如果还不不够，接着再分配一个块，依此类推，也就是说，有可能在一次查询中，mysql要进行多次内存分配的操作。<br>适当的调节query_cache_min_res_unit可以优化内存<br>如果你的查询结果都是一些small result,默认的query_cache_min_res_unit可能会造成大量的内存碎片<br>如果你的查询结果都是一些larger resule，你可以适当的把query_cache_min_res_unit调大</p>
+</li>
+<li><p><code>query_cache_type</code><br>如果query_cache_type的值是0或者OFF，不会读取缓存<br>如果query_cache_type的值是1或者ON会读取缓存除非sql语句中注明“SELECT SQL_NO_CACHE”<br>如果query_cache_type的值是2或者DEMAND只有在sql语句中注明SELECT SQL_CACHE才会读取缓存</p>
+</li>
+<li><p><code>query_cache_size</code><br>官方建议缓存大小控制在几十兆，不要设置成几百兆，如果设置的太小也是不可以的,设置小于40Kb会有警告。</p>
+</li>
+</ul>
+<h2 id="开启缓存的方式"><a href="#开启缓存的方式" class="headerlink" title="开启缓存的方式"></a>开启缓存的方式</h2><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; <span class="keyword">set</span> <span class="keyword">global</span> query_cache_size = <span class="number">600000</span>; <span class="comment">--设置缓存内存大小</span></span><br><span class="line">mysql&gt; <span class="keyword">set</span> <span class="keyword">global</span> query_cache_type = ON;     <span class="comment">--开启查询缓存</span></span><br></pre></td></tr></table></figure>
+<p>⚠️注意</p>
+<blockquote>
+<p>set global时需要有SUPER权限</p>
+</blockquote>
+<p>如果在开启Mysql缓存状态下想针对某个表不让它进行缓存查询，此时可以这样写</p>
+<figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> SQL_NO_CACHE * <span class="keyword">from</span> table_name;</span><br></pre></td></tr></table></figure>
+<h2 id="查询Mysql缓存状态"><a href="#查询Mysql缓存状态" class="headerlink" title="查询Mysql缓存状态"></a>查询Mysql缓存状态</h2><figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SHOW STATUS LIKE 'Qcache%';</span><br><span class="line">+-------------------------+--------+</span><br><span class="line">|<span class="string"> Variable_name           </span>|<span class="string"> Value  </span>|</span><br><span class="line">+-------------------------+--------+</span><br><span class="line">|<span class="string"> Qcache_free_blocks      </span>|<span class="string"> 1      </span>|<span class="string"> ----在查询缓存中的闲置块</span></span><br><span class="line">|<span class="string"> Qcache_free_memory      </span>|<span class="string"> 382704 </span>|<span class="string"> ----剩余缓存的大小</span></span><br><span class="line">|<span class="string"> Qcache_hits             </span>|<span class="string"> 198    </span>|<span class="string"> ----缓存命中次数</span></span><br><span class="line">|<span class="string"> Qcache_inserts          </span>|<span class="string"> 131    </span>|<span class="string"> ----缓存被插入的次数</span></span><br><span class="line">|<span class="string"> Qcache_lowmem_prunes    </span>|<span class="string"> 0      </span>|<span class="string"> ----由于内存低而被删除掉的缓存条数</span></span><br><span class="line">|<span class="string"> Qcache_not_cached       </span>|<span class="string"> 169    </span>|<span class="string"> ----没有被缓存的条数</span></span><br><span class="line">|<span class="string"> Qcache_queries_in_cache </span>|<span class="string"> 128    </span>|<span class="string"> ----缓存中有多少条查询语句</span></span><br><span class="line">|<span class="string"> Qcache_total_blocks     </span>|<span class="string"> 281    </span>|<span class="string"> ----总块数</span></span><br><span class="line"><span class="string">+-------------------------+--------+</span></span><br><span class="line"><span class="string">8 rows in set (0.00 sec)</span></span><br></pre></td></tr></table></figure>
+<h2 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h2><ul>
+<li><a href="http://dev.mysql.com/doc/refman/5.6/en/" target="_blank" rel="external">MysqlDocument</a></li>
+</ul>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Mysql/" rel="tag">#Mysql</a>
+          
+            <a href="/tags/缓存/" rel="tag">#缓存</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/03/23/php-session-unset/" rel="next" title="PHP注销SESSION的方法">
+                <i class="fa fa-chevron-left"></i> PHP注销SESSION的方法
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/03/24/php-psr/" rel="prev" title="PHP基本代码规范">
+                PHP基本代码规范 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+        </div>
+
+        
+
+
+        
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/03/24/mysql-cacahe/"
+           data-title="Mysql缓存技术" data-url="http://yoursite.com/2016/03/24/mysql-cacahe/">
+      </div>
+    
+  </div>
+
+
+      </div>
+
+      
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/uploads/avatar.jpg" alt="Song Gao" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Song Gao</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">56</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">15</span>
+              <span class="site-state-item-name">分类</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">43</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Code-Ken" target="_blank">
+                  
+                    <i class="fa fa-github"></i> GitHub
+                  
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="mailto:gaosong0301@foxmail.com" target="_blank">
+                  
+                    <i class="fa fa-globe"></i> Email
+                  
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://7xnp4f.com1.z0.glb.clouddn.com/weixin.jpg" target="_blank">
+                  
+                    <i class="fa fa-weixin"></i> Weixin
+                  
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator">
+            <i class="fa fa-angle-double-up"></i>
+          </div>
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Mysql缓存特征"><span class="nav-number">1.</span> <span class="nav-text">Mysql缓存特征</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#哪些情况下Mysql缓存不起作用"><span class="nav-number">2.</span> <span class="nav-text">哪些情况下Mysql缓存不起作用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Mysql缓存相关参数"><span class="nav-number">3.</span> <span class="nav-text">Mysql缓存相关参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#开启缓存的方式"><span class="nav-number">4.</span> <span class="nav-text">开启缓存的方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查询Mysql缓存状态"><span class="nav-number">5.</span> <span class="nav-text">查询Mysql缓存状态</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文档"><span class="nav-number">6.</span> <span class="nav-text">参考文档</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator">
+            <i class="fa fa-angle-double-down"></i>
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+      
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="icon-next-heart fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Song Gao</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT
+  </a>
+</div>
+
+
+
+      </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+    
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"gaosong"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+    
+     
+
+
+    
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.2"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.2"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+<script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+<script type="text/javascript" src="/js/motion.js?v=0.4.5.2" id="motion.global"></script>
+
+
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.2" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 1 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    motionMiddleWares.sidebar = function () {
+      var $tocContent = $('.post-toc-content');
+      if (CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    };
+  });
+</script>
+
+
+
+  <script type="text/javascript" src="/js/bootstrap.js"></script>
+
+  
+  
+
+  
+  
+
+</body>
+</html>
